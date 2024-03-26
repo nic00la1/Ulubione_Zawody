@@ -1,0 +1,8 @@
+<div class="container">
+    <h3>Nasi Pracownicy</h3>
+    <ul>
+        @for (osoba of osoby; track $index) {
+            <li>{{osoba.imie}} {{osoba.nazwisko}} - {{osoba.zawod}}</li>
+        }
+    </ul>
+</div>
