@@ -1,1 +1,5 @@
-siema
+<ul>
+    @for (osoba of osoby; track $index) {
+        <li>{{osoba.imie}} {{osoba.nazwisko}} - {{osoba.zawod}}</li>
+    }
+</ul>

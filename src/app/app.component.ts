@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { Osoba } from './shared/models/Osoba.model';
+import { OsobaService } from './services/osoba.service';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +12,15 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Ulubione_Zawody';
+  osoby!:Osoba[]
+  osobaService = inject(OsobaService)
+
+  ngOnInit() {
+    this.getOsoby();
+  }
+
+  getOsoby() : void {
+    this.osoby = this.osobaService.getOsoby();
+  }
+  
 }
