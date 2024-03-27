@@ -23,6 +23,7 @@ export class OurEmployeesComponent {
 
   getPersons() : void {
     this.persons = this.personService.getPersons();
+    this.messageService.add('Pobrano liste osob');
   }
 
   selectPerson(person: Person) {
