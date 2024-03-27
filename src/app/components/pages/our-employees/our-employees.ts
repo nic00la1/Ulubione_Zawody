@@ -24,7 +24,6 @@ export class OurEmployeesComponent {
 
   getPersons() : void {
     this.personService.getPersons().subscribe(persons => this.persons = persons);
-    this.messageService.add('Pobrano liste osob');
   }
 
   selectPerson(person: Person) {
@@ -34,7 +33,6 @@ export class OurEmployeesComponent {
 
   updatePerson(updatedPerson : Person) : void {
     this.personService.updatePerson(updatedPerson);
-    this.messageService.add(`Zaktualizowano dane osoby o imieniu: ${updatedPerson.name}`);
   }
 
   
