@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, Input, inject } from '@angular/core';
 import { Person } from '../../../shared/models/Person.model';
 import { PersonService } from '../../../services/person/person.service';
@@ -12,7 +13,7 @@ import { MessageService } from '../../../services/message/message.service';
   styleUrl: './our-employees.css'
 })
 export class OurEmployeesComponent {
-  persons!:Person[]
+  persons : Person[] = [];
   @Input() selectedPerson ?: Person;
   personService = inject(PersonService)
   messageService = inject(MessageService)
@@ -22,7 +23,7 @@ export class OurEmployeesComponent {
   }
 
   getPersons() : void {
-    this.persons = this.personService.getPersons();
+    this.personService.getPersons().subscribe(persons => this.persons = persons);
     this.messageService.add('Pobrano liste osob');
   }
 
@@ -35,4 +36,6 @@ export class OurEmployeesComponent {
     this.personService.updatePerson(updatedPerson);
     this.messageService.add(`Zaktualizowano dane osoby o imieniu: ${updatedPerson.name}`);
   }
+
+  
 }

@@ -1,19 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Person } from '../../shared/models/Person.model';
 import { PERSONS } from '../../shared/constants/Persons';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MessageService } from '../message/message.service';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonService {
+  
+  private peopleUrl = 'api/people';  // URL to web api
 
-  getPersons(): Person[] {
-    return PERSONS;
+  private http = inject(HttpClient);
+  private messageService = inject(MessageService);
+
+  private log(message: string) {
+    this.messageService.add(`PersonService: ${message}`);
   }
 
-  getPerson(id: number): Person {
-    return PERSONS.find(person => person.id === id) as Person;
+  getPersons(): Observable<Person[]> {
+    return this.http.get<Person[]>(this.peopleUrl);
   }
+
 
   updatePerson(updatedPerson : Person) : void {
     const index = PERSONS.findIndex(person => person.id === updatedPerson.id);
@@ -21,4 +30,5 @@ export class PersonService {
       PERSONS[index] = updatedPerson;
     }
   }
+
 }
