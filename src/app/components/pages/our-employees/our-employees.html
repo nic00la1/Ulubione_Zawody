@@ -26,6 +26,9 @@
 
   @if (selectedPerson) {
     <h3>Edytuj Dane <span class="text-primary">{{selectedPerson.name | uppercase}}</span> z ID: {{selectedPerson.id}} </h3>
+    <div class="d-flex flex-column">
+      <button class="btn btn-danger" >Usuń</button>
+    
     <div class="d-flex flex-column align-items-center justify-content-center border p-3">
       <label for="name" class="form-control-lg">Imię:</label>
       <input
@@ -57,7 +60,11 @@
         placeholder="Podaj nowe stanowisko"
         class="form-control-lg"
         [(ngModel)]="selectedPerson.proffesion"/>      
-        <button class="btn btn-primary mt-3" (click)="updatePerson(selectedPerson)">Zapisz zmiany</button>
+        
     </div>
+    <div class="d-flex flex-column">
+      <button class="btn btn-primary przycisk" (click)="updatePerson(selectedPerson)">Zapisz zmiany</button>
+    </div>
+  </div>
   }
 </div>
