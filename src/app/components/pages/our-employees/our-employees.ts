@@ -31,8 +31,13 @@ export class OurEmployeesComponent {
     this.messageService.add(`Wybrano osobe o imieniu: ${person.name}`);
   }
 
-  updatePerson(updatedPerson : Person) : void {
-    this.personService.updatePerson(updatedPerson);
+  updatePerson(updatedPerson: Person): void {
+    this.personService.updatePerson(updatedPerson).subscribe(() => {
+      const index = this.persons.findIndex(person => person.id === updatedPerson.id);
+      if (index !== -1) {
+        this.persons[index] = updatedPerson;
+      }
+    });
   }
 
   

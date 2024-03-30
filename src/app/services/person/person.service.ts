@@ -40,12 +40,11 @@ export class PersonService {
     );
   }
 
-  updatePerson(updatedPerson : Person) : void {
-    const index = PERSONS.findIndex(person => person.id === updatedPerson.id);
-    if (index !== -1) {
-      PERSONS[index] = updatedPerson;
-      this.log(`Updated person with id ${updatedPerson.id}`);
-    }
+  updatePerson(updatedPerson : Person) : Observable<any> {
+    return this.http.put(`${this.peopleUrl}/${updatedPerson.id}`, updatedPerson, this.httpOptions).pipe(
+      tap(_ => this.log(`updated person id=${updatedPerson.id}`)),
+      catchError(this.handleError<any>('updatePerson'))
+    );
   }
 
 addPerson(person: Person): Observable<Person> {
