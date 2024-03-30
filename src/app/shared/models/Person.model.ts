@@ -1,7 +1,9 @@
 export class Person {
-    id !: number;
-    name !: string;
-    surname !: string;
-    proffesion !: string;
-    age !: number;
+    constructor(
+        public id: number,
+        public name: string,
+        public surname: string,
+        public age: number,
+        public proffesion: string
+    ) {}
 } 
