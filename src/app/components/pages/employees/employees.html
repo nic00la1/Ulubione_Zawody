@@ -1,0 +1,140 @@
+<div class="container">
+  <div class="row pt-3">
+    <div class="col-6">
+      <h1>Nasi pracownicy</h1>
+    </div>
+    <div class="col-6 text-end">
+      <button class="btn btn-outline-success" (click)="openModal()">
+        Dodaj
+      </button>
+    </div>
+  </div>
+  @if(employeeList.length !== 0) {
+  <div class="row">
+    @for (item of employeeList; track $index) {
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-12">
+              <strong>{{item.name}} {{item.surname}}</strong>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>{{item.email}}</p>
+          <p>{{item.profession}}</p>
+        </div>
+        <div class="card-footer text-end">
+          <div class="row">
+            <div class="col-12 ">
+              <button class="btn btn-sm btn-outline-primary m-1" (click)="onEdit(item)">
+                Edytuj
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="onDelete(item)">
+                Usuń
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  } @else {
+  <div class="row">
+    <div
+      class="col-12 text-center p-4 border border-danger rounded bg-light shadow-lg"
+    >
+      <p class="text-danger">
+        <strong>Nie znaleziono pracowników. Utwórz nowy rekord</strong>
+      </p>
+    </div>
+  </div>
+
+  }
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal" #myModal>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Utwórz Nowego Pracownika</h4>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="closeModal()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form class="row">
+            <div class="col-5">
+              <label for="">Imię</label>
+              <input
+                type="text"
+                [(ngModel)]="employeeObj.name"
+                name="employeeName"
+                class="form-control"
+                placeholder="Imię"
+              />
+            </div>
+            <div class="col-5">
+              <label for="">Nazwisko</label>
+              <input
+                type="text"
+                [(ngModel)]="employeeObj.surname"
+                name="employeeSurname"
+                class="form-control"
+                placeholder="Nazwisko"
+              />
+            </div>
+          </form>
+          <div class="row">
+            <div class="col-5">
+              <label for="">Email</label>
+              <input
+                type="email"
+                [(ngModel)]="employeeObj.email"
+                name="employeeEmail"
+                class="form-control"
+                placeholder="Email"
+              />
+            </div>
+            <div class="col-5">
+              <label for="">Stanowisko</label>
+              <input
+                type="text"
+                [(ngModel)]="employeeObj.profession"
+                name="employeeProfession"
+                class="form-control"
+                placeholder="Stanowisko"
+              />
+            </div>
+          </div>
+          <div class="modal-footer mt-2">
+            <button type="button" class="btn btn-danger" (click)="closeModal()">
+              Zamknij
+            </button>
+            @if (employeeObj.id == 0) {
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="saveEmployee()"
+            >
+              Zapisz
+            </button>
+            } @else {
+              <button
+              type="button"
+              class="btn btn-success"
+              (click)="updateEmployee()"
+            >
+              Edytuj
+            </button>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
