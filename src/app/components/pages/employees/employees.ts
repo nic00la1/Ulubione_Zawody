@@ -36,6 +36,15 @@ export class OurEmployeesComponent implements OnInit{
   }
  }
  
+onDelete(item: Employee) {
+  const isDelete = confirm('Jesteś pewny, że chcesz usunąć tego pracownika?');
+  if (isDelete) {
+    const currentRecord = this.employeeList.findIndex(x => x.id === item.id);
+    this.employeeList.splice(currentRecord, 1)
+    localStorage.setItem('angular17crud', JSON.stringify(this.employeeList));
+  }
+}
+
  onEdit(item: Employee) {
     this.employeeObj = item;
     this.openModal();
@@ -54,7 +63,6 @@ updateEmployee() {
 }
 
  saveEmployee() {
-  debugger;
   const isLocalPresent = localStorage.getItem('angular17crud');
   if (isLocalPresent != null) {
 

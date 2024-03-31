@@ -25,11 +25,14 @@
           <p>{{item.email}}</p>
           <p>{{item.proffesion}}</p>
         </div>
-        <div class="card-footer text-center">
+        <div class="card-footer text-end">
           <div class="row">
-            <div class="col-3">
-              <button class="btn btn-outline-primary" (click)="onEdit(item)">
+            <div class="col-12 ">
+              <button class="btn btn-sm btn-outline-primary m-1" (click)="onEdit(item)">
                 Edytuj
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="onDelete(item)">
+                Usuń
               </button>
             </div>
           </div>
