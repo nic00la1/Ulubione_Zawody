@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row pt-3">
+    <div class="col-6">
+      <h1>Nasi pracownicy</h1>
+    </div>
+    <div class="col-6 text-end">
+      <button class="btn btn-outline-success" (click)="openModal()">Dodaj</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-6">Imie i nazwisko</div>
+            <div class="col-6 text-end">siema</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Email</p>
+          <p>Stanowisko</p>
+        </div>
+        <div class="card-footer text-center">
+          <button class="btn btn-outline-primary">Edytuj</button>
+          <button class="btn btn-outline-danger">Usuń</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal" #myModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Create New Employee</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">Modal body..</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="closeModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
