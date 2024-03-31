@@ -1,1 +1,52 @@
-<p>login-page works!</p>
+<div class="my-container">
+  <div class="details">
+    <h1>Zaloguj się</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          placeholder="Wprowadź email"
+          formControlName="email"
+          class="form-control"
+          required
+        />
+        @if (fc['email'].errors && isSubmitted) {
+            <div class="error-list">
+                @if (fc['email'].errors['required']) {
+                    <div class="error-item">
+                        Email jest wymagany
+                    </div>
+                }
+                @if (fc['email'].errors['email']) {
+                    <div class="error-item">
+                        Email jest niepoprawny
+                    </div>
+                }
+
+            </div>    
+        }
+      </div>
+      <div class="form-group">
+        <label for="password">Hasło</label>
+        <input
+          type="password"
+          placeholder="Wprowadź hasło"
+          formControlName="password"
+          class="form-control"
+          required
+        />
+        @if (fc['password'].errors && isSubmitted) {
+            <div class="error-list">
+                @if (fc['password'].errors['required']) {
+                    <div class="error-item">
+                        Hasło jest wymagane
+                    </div>
+                }
+            </div>    
+        }
+      </div>
+      <button type="submit" class="btn btn-primary">Zaloguj</button>
+    </form>
+  </div>
+</div>
