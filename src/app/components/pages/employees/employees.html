@@ -4,28 +4,31 @@
       <h1>Nasi pracownicy</h1>
     </div>
     <div class="col-6 text-end">
-      <button class="btn btn-outline-success" (click)="openModal()">Dodaj</button>
+      <button class="btn btn-outline-success" (click)="openModal()">
+        Dodaj
+      </button>
     </div>
   </div>
   <div class="row">
-    <div class="col-4">
-      <div class="card">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-6">Imie i nazwisko</div>
-            <div class="col-6 text-end">siema</div>
+    @for (employee of employees; track $index) {
+        <div class="col-4">
+            <div class="card">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-8">{{employee.name}} {{employee.surname}}</div>
+                </div>
+              </div>
+              <div class="card-body">
+                <p>{{employee.email}}</p>
+                <p>{{employee.proffesion}}</p>
+              </div>
+              <div class="card-footer text-center">
+                <button class="btn btn-outline-primary">Edytuj</button>
+                <button class="btn btn-outline-danger">Usuń</button>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="card-body">
-          <p>Email</p>
-          <p>Stanowisko</p>
-        </div>
-        <div class="card-footer text-center">
-          <button class="btn btn-outline-primary">Edytuj</button>
-          <button class="btn btn-outline-danger">Usuń</button>
-        </div>
-      </div>
-    </div>
+    }
   </div>
 </div>
 
@@ -34,18 +37,58 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Create New Employee</h4>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
+        <h4 class="modal-title">Utwórz Pracownika</h4>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
       </div>
-      <div class="modal-body">Modal body..</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="closeModal()">
-          Close
-        </button>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-5">
+            <label for="">Imię</label>
+            <input
+              type="text"
+              [(ngModel)]="employee.name"
+              class="form-control"
+              placeholder="Imię"
+            />
+          </div>
+          <div class="col-5">
+            <label for="">Nazwisko</label>
+            <input
+              type="text"
+              [(ngModel)]="employee.surname"
+              class="form-control"
+              placeholder="Nazwisko"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-5">
+            <label for="">Email</label>
+            <input
+              type="email"
+              [(ngModel)]="employee.email"
+              class="form-control"
+              placeholder="Email"
+            />
+          </div>
+          <div class="col-5">
+            <label for="">Stanowisko</label>
+            <input
+              type="text"
+              [(ngModel)]="employee.proffesion"
+              class="form-control"
+              placeholder="Stanowisko"
+            />
+          </div>
+        </div>
+        <div class="modal-footer mt-2">
+          <button type="button" class="btn btn-danger" (click)="closeModal()">
+            Zamknij
+          </button>
+          <button type="button" class="btn btn-primary" (click)="saveEmployee()">
+            Zapisz
+          </button>
+        </div>
       </div>
     </div>
   </div>
