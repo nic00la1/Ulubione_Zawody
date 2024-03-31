@@ -1,5 +1,6 @@
 export const sample_employees: any[] = [
   {
+    id: 1,
     name: 'John Doe',
     email: 'john@gmail.com',
     password: '12345',
@@ -8,6 +9,7 @@ export const sample_employees: any[] = [
     isAdmin: true,
   },
   {
+    id: 2,
     name: 'Jane Doe',
     email: 'jane@gmail.com',
     password: '12345',

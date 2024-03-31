@@ -9,85 +9,123 @@
       </button>
     </div>
   </div>
+  @if(employeeList.length !== 0) {
   <div class="row">
-    @for (employee of employees; track $index) {
-        <div class="col-4">
-            <div class="card">
-              <div class="card-header">
-                <div class="row">
-                  <div class="col-8">{{employee.name}} {{employee.surname}}</div>
-                </div>
-              </div>
-              <div class="card-body">
-                <p>{{employee.email}}</p>
-                <p>{{employee.proffesion}}</p>
-              </div>
-              <div class="card-footer text-center">
-                <button class="btn btn-outline-primary">Edytuj</button>
-                <button class="btn btn-outline-danger">Usuń</button>
-              </div>
+    @for (item of employeeList; track $index) {
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-12">
+              <strong>{{item.name}} {{item.surname}}</strong>
             </div>
           </div>
+        </div>
+        <div class="card-body">
+          <p>{{item.email}}</p>
+          <p>{{item.proffesion}}</p>
+        </div>
+        <div class="card-footer text-center">
+          <div class="row">
+            <div class="col-3">
+              <button class="btn btn-outline-primary" (click)="onEdit(item)">
+                Edytuj
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     }
   </div>
-</div>
+  } @else {
+  <div class="row">
+    <div
+      class="col-12 text-center p-4 border border-danger rounded bg-light shadow-lg"
+    >
+      <p class="text-danger">
+        <strong>Nie znaleziono pracowników. Utwórz nowy rekord</strong>
+      </p>
+    </div>
+  </div>
 
-<!-- The Modal -->
-<div class="modal" id="myModal" #myModal>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Utwórz Pracownika</h4>
-        <button type="button" class="btn-close" (click)="closeModal()"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-5">
-            <label for="">Imię</label>
-            <input
-              type="text"
-              [(ngModel)]="employee.name"
-              class="form-control"
-              placeholder="Imię"
-            />
-          </div>
-          <div class="col-5">
-            <label for="">Nazwisko</label>
-            <input
-              type="text"
-              [(ngModel)]="employee.surname"
-              class="form-control"
-              placeholder="Nazwisko"
-            />
-          </div>
+  }
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal" #myModal>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Utwórz Nowego Pracownika</h4>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="closeModal()"
+          ></button>
         </div>
-        <div class="row">
-          <div class="col-5">
-            <label for="">Email</label>
-            <input
-              type="email"
-              [(ngModel)]="employee.email"
-              class="form-control"
-              placeholder="Email"
-            />
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-5">
+              <label for="">Imię</label>
+              <input
+                type="text"
+                [(ngModel)]="employeeObj.name"
+                class="form-control"
+                placeholder="Imię"
+              />
+            </div>
+            <div class="col-5">
+              <label for="">Nazwisko</label>
+              <input
+                type="text"
+                [(ngModel)]="employeeObj.surname"
+                class="form-control"
+                placeholder="Nazwisko"
+              />
+            </div>
           </div>
-          <div class="col-5">
-            <label for="">Stanowisko</label>
-            <input
-              type="text"
-              [(ngModel)]="employee.proffesion"
-              class="form-control"
-              placeholder="Stanowisko"
-            />
+          <div class="row">
+            <div class="col-5">
+              <label for="">Email</label>
+              <input
+                type="email"
+                [(ngModel)]="employeeObj.email"
+                class="form-control"
+                placeholder="Email"
+              />
+            </div>
+            <div class="col-5">
+              <label for="">Stanowisko</label>
+              <input
+                type="text"
+                [(ngModel)]="employeeObj.proffesion"
+                class="form-control"
+                placeholder="Stanowisko"
+              />
+            </div>
           </div>
-        </div>
-        <div class="modal-footer mt-2">
-          <button type="button" class="btn btn-danger" (click)="closeModal()">
-            Zamknij
-          </button>
-          <button type="button" class="btn btn-primary" (click)="saveEmployee()">
-            Zapisz
-          </button>
+          <div class="modal-footer mt-2">
+            <button type="button" class="btn btn-danger" (click)="closeModal()">
+              Zamknij
+            </button>
+            @if (employeeObj.id == 0) {
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="saveEmployee()"
+            >
+              Zapisz
+            </button>
+            } @else {
+              <button
+              type="button"
+              class="btn btn-success"
+              (click)="updateEmployee()"
+            >
+              Edytuj
+            </button>
+            }
+          </div>
         </div>
       </div>
     </div>
