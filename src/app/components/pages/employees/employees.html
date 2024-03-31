@@ -10,7 +10,7 @@
     </div>
   </div>
   @if(employeeList.length !== 0) {
-  <form class="row" [formGroup]="newEmployeeForm">
+  <div class="row">
     @for (item of employeeList; track $index) {
     <div class="col-4">
       <div class="card">
@@ -40,7 +40,7 @@
       </div>
     </div>
     }
-  </form>
+  </div>
   } @else {
   <div class="row">
     <div
@@ -67,12 +67,13 @@
           ></button>
         </div>
         <div class="modal-body">
-          <div class="row">
+          <form class="row">
             <div class="col-5">
               <label for="">Imię</label>
               <input
                 type="text"
                 [(ngModel)]="employeeObj.name"
+                name="employeeName"
                 class="form-control"
                 placeholder="Imię"
               />
@@ -82,17 +83,19 @@
               <input
                 type="text"
                 [(ngModel)]="employeeObj.surname"
+                name="employeeSurname"
                 class="form-control"
                 placeholder="Nazwisko"
               />
             </div>
-          </div>
+          </form>
           <div class="row">
             <div class="col-5">
               <label for="">Email</label>
               <input
                 type="email"
                 [(ngModel)]="employeeObj.email"
+                name="employeeEmail"
                 class="form-control"
                 placeholder="Email"
               />
@@ -102,6 +105,7 @@
               <input
                 type="text"
                 [(ngModel)]="employeeObj.profession"
+                name="employeeProfession"
                 class="form-control"
                 placeholder="Stanowisko"
               />

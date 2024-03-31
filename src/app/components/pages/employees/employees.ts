@@ -16,25 +16,15 @@ export class OurEmployeesComponent implements OnInit {
   employeeList: Employee[] = [];
 
   // Validation
-  newEmployeeForm !: FormGroup;
   isSubmitted = false;
-  formBuilder = inject(FormBuilder);
   employeeService = inject(EmployeeService);
 
   ngOnInit(): void {
-    this.employeeList = this.employeeService.getAll();
+    const employees = localStorage.getItem('employees');
+    if (employees) {
+      this.employeeList = JSON.parse(employees);
+    } 
 
-    // Validation
-    this.newEmployeeForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      profession: ['', Validators.required],
-    });
-  }
-
-  get fc() {
-    return this.newEmployeeForm.controls;
   }
 
   openModal() {
@@ -53,15 +43,15 @@ export class OurEmployeesComponent implements OnInit {
 
   saveEmployee() {
     this.isSubmitted = true;
-    if (this.newEmployeeForm.invalid) {
-      return;
-    }
+    
     this.employeeList = this.employeeService.saveEmployee(this.employeeList, this.employeeObj);
+    localStorage.setItem('employees', JSON.stringify(this.employeeList));
     this.closeModal();
   }
 
   onDelete(item: Employee) {
     this.employeeList = this.employeeService.onDelete(this.employeeList, item);
+    localStorage.setItem('employees', JSON.stringify(this.employeeList));
   }
 
   onEdit(item: Employee) {
