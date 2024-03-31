@@ -1,5 +1,5 @@
 <div class="container">
-    <app-message></app-message>
+    <app-message class="m-2"></app-message>
     <form class="container form-group" (ngSubmit)="add(employeeName.value, employeeSurname.value, +employeeAge.value, employeePosition.value)">
         <h3>Dodaj pracownika</h3>
         <label for="name">Imie pracownika </label>
@@ -14,7 +14,7 @@
         <label for="proffesion">Stanowisko pracownika</label>
         <input id="proffesion" #employeePosition class="form-control"/>
          <!-- (click) passes input value to add() and then clears the input -->
-         <button type="submit" class="btn btn-primary m-2"> Add hero
+         <button type="submit" class="btn btn-primary m-2"> Dodaj
        </button>
     </form>
     
