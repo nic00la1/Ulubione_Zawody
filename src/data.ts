@@ -1,19 +1,17 @@
 export const sample_employees: any[] = [
   {
     id: 1,
-    name: 'John Doe',
+    name: 'John',
+    surname: 'Doe',
     email: 'john@gmail.com',
-    password: '12345',
-    address: '123 Main St, New York, NY',
     profession: 'Software Engineer',
     isAdmin: true,
   },
   {
     id: 2,
-    name: 'Jane Doe',
+    name: 'Jane',
+    surname: 'Doe',
     email: 'jane@gmail.com',
-    password: '12345',
-    address: 'Shanghai, China',
     profession: 'Product Manager',
     isAdmin: false,
   },

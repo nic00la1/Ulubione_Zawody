@@ -3,7 +3,7 @@ export class Employee {
     email !: string;
     name !: string;
     surname !: string;
-    proffesion !: string;
+    profession !: string;
     token !: string;
     isAdmin !: boolean;        
 } 

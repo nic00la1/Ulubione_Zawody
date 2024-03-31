@@ -1,83 +1,76 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { Employee } from '../../../shared/models/Employee';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { EmployeeService } from '../../../services/employee.service';
 @Component({
   selector: 'our-employees',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './employees.html',
-  styleUrl: './employees.css'
+  styleUrl: './employees.css',
 })
-export class OurEmployeesComponent implements OnInit{
+export class OurEmployeesComponent implements OnInit {
   @ViewChild('myModal') modal: ElementRef | undefined;
   employeeObj: Employee = new Employee();
   employeeList: Employee[] = [];
 
+  // Validation
+  newEmployeeForm !: FormGroup;
+  isSubmitted = false;
+  formBuilder = inject(FormBuilder);
+  employeeService = inject(EmployeeService);
 
   ngOnInit(): void {
-    const localData = localStorage.getItem('angular17crud');
-    if (localData != null) {
-      this.employeeList = JSON.parse(localData);
+    this.employeeList = this.employeeService.getAll();
+
+    // Validation
+    this.newEmployeeForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      profession: ['', Validators.required],
+    });
+  }
+
+  get fc() {
+    return this.newEmployeeForm.controls;
+  }
+
+  openModal() {
+    const modal = document.getElementById('myModal');
+    if (modal != null) {
+      modal.style.display = 'block';
     }
   }
 
- openModal() {
-  const modal = document.getElementById('myModal');
-  if(modal !=null) {
-    modal.style.display = 'block';
+  closeModal() {
+    this.employeeObj = new Employee();
+    if (this.modal != null) {
+      this.modal.nativeElement.style.display = 'none';
+    }
   }
- }
 
- closeModal() {
-  this.employeeObj = new Employee();
-  if (this.modal != null) {
-    this.modal.nativeElement.style.display = 'none';
+  saveEmployee() {
+    this.isSubmitted = true;
+    if (this.newEmployeeForm.invalid) {
+      return;
+    }
+    this.employeeList = this.employeeService.saveEmployee(this.employeeList, this.employeeObj);
+    this.closeModal();
   }
- }
- 
-onDelete(item: Employee) {
-  const isDelete = confirm('Jesteś pewny, że chcesz usunąć tego pracownika?');
-  if (isDelete) {
-    const currentRecord = this.employeeList.findIndex(x => x.id === item.id);
-    this.employeeList.splice(currentRecord, 1)
-    localStorage.setItem('angular17crud', JSON.stringify(this.employeeList));
-  }
-}
 
- onEdit(item: Employee) {
-    this.employeeObj = item;
+  onDelete(item: Employee) {
+    this.employeeList = this.employeeService.onDelete(this.employeeList, item);
+  }
+
+  onEdit(item: Employee) {
+    this.employeeObj = this.employeeService.onEdit(item);
     this.openModal();
- }
-
-updateEmployee() {
-  const currentRecord = this.employeeList.find(x => x.id === this.employeeObj.id);
-  if (currentRecord != undefined) {
-    currentRecord.name = this.employeeObj.name;
-    currentRecord.surname = this.employeeObj.surname;
-    currentRecord.email = this.employeeObj.email;
-    currentRecord.proffesion = this.employeeObj.proffesion;
-  };
-  localStorage.setItem('angular17crud', JSON.stringify(this.employeeList));
-  this.closeModal();
-}
-
- saveEmployee() {
-  const isLocalPresent = localStorage.getItem('angular17crud');
-  if (isLocalPresent != null) {
-
-    const oldEmployee = JSON.parse(isLocalPresent);
-    this.employeeObj.id = oldEmployee.length + 1;
-    oldEmployee.push(this.employeeObj);
-    this.employeeList = oldEmployee;
-    localStorage.setItem('angular17crud', JSON.stringify(oldEmployee));
-  } else {
-    const newEmployee = [];
-    newEmployee.push(this.employeeObj);
-    this.employeeObj.id = 1;
-    this.employeeList = newEmployee;
-    localStorage.setItem('angular17crud', JSON.stringify(newEmployee));
   }
-  this.closeModal();
- }
+  
+  updateEmployee() {
+    this.employeeList = this.employeeService.updateEmployee(this.employeeList, this.employeeObj);
+    this.closeModal();
+  }
 }
