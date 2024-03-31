@@ -1,0 +1,12 @@
+#logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}
+
+.hb {
+    width: 30px;
+  }
