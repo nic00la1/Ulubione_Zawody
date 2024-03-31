@@ -12,6 +12,7 @@ import { SidebarComponent } from './components/partials/sidebar/sidebar.componen
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  isLoggedIn = false;
   sidebarActive = false;
 
   onToggle() {

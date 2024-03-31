@@ -10,3 +10,13 @@
 .hb {
     width: 30px;
   }
+
+    span {
+        border-bottom: transparent;
+    }
+
+  span:hover {
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-bottom: 2px solid #333;
+  }
