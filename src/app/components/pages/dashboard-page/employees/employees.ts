@@ -22,12 +22,24 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './employees.css',
 })
 export class OurEmployeesComponent {
+  @Input() isEditMode : boolean = false;
+
+  @Input() selectedEmployee !: Employee 
+
+  @ViewChild('employeeForm') employeeForm !: NgForm
+
   @Output()
   CloseForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output()
   EmitTaskData: EventEmitter<Employee> = new EventEmitter<Employee>();
 
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.employeeForm.form.patchValue(this.selectedEmployee);
+    }, 0);
+  }
 
   OnCloseForm(){
     this.CloseForm.emit(false);

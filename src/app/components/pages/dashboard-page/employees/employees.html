@@ -1,10 +1,10 @@
 <div class="overlay">
 	<div class="popup">
-		<h2>Dodaj nowego pracwonika</h2>
+		<h2>{{isEditMode ? 'Edytuj Pracownika' : 'Utwórz nowego pracownika'}}</h2>
 		<a class="close" href="#" (click)="OnCloseForm()">&times;</a>
 		<div class="content">
 			<section class="container">
-                <form action="#" class="form" #taskForm="ngForm" (ngSubmit)="OnFormSubmitted(taskForm)">
+                <form action="#" class="form" #employeeForm="ngForm" (ngSubmit)="OnFormSubmitted(employeeForm)">
                   <div class="input-box">
                     <label>Imię</label>
                     <input type="text" required name="name" ngModel/>
@@ -22,7 +22,7 @@
                     <input type="text" required name="profession" ngModel />
                   </div>
                  
-                  <button type="submit">Dodaj pracownika</button>
+                  <button type="submit">{{isEditMode ? 'Edytuj Pracownika' : 'Dodaj Pracownika'}}</button>
                 </form>
               </section>
 		</div>

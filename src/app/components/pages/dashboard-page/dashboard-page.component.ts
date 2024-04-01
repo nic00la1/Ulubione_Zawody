@@ -21,12 +21,17 @@ export class DashboardPageComponent implements OnInit {
   allEmployees: Employee[] = [];
   employeeService = inject(EmployeeService);
 
+  editMode : boolean = false;
+  selectedEmployee !: Employee 
+
   ngOnInit() {
     this.fetchAllEmployees();
   }
 
   OpenCreateEmployeeForm() {
     this.showCreateEmployeeForm = true;
+    this.editMode = false;
+    this.selectedEmployee = {name: '', surname: '', email: '', profession: ''}
   }
 
   CloseCreateEmployeeForm() {
@@ -50,5 +55,14 @@ export class DashboardPageComponent implements OnInit {
 
   DeleteAllEmployees() {
    this.employeeService.DeleteAllEmployees();
+  }
+
+  onEditEmployeeClicked(id: string | undefined) {
+    // OPEN EDIT EMPLOYEE FORM
+    this.showCreateEmployeeForm = true;
+    this.editMode = true;
+
+    this.selectedEmployee != this.allEmployees.find((employee) => { return employee.id === id; })
+  
   }
 }

@@ -2,6 +2,8 @@
 <our-employees
   (CloseForm)="CloseCreateEmployeeForm()"
   (EmitTaskData)="CreateEmployee($event)"
+  [isEditMode]="editMode"
+  [selectedEmployee]="selectedEmployee"
 ></our-employees>
 }
 
@@ -39,7 +41,7 @@
       </div>
       <div class="task-action-icons">
         <button class="btn btn-sm btn-outline-info">Info</button>
-        <button class="btn btn-sm btn-outline-primary">Edytuj</button>
+        <button class="btn btn-sm btn-outline-primary" (click)="onEditEmployeeClicked(employee.id)">Edytuj</button>
         <button class="btn btn-sm btn-outline-danger" (click)="DeleteEmployee(employee.id)">Usuń</button>
       </div>
     </div>
