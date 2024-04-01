@@ -2,10 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { MessageComponent } from '../../partials/message/message.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { OurEmployeesComponent } from './employees/employees';
 import { Employee } from '../../../shared/models/Employee';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+import { OurEmployeesComponent } from './employees/employees';
+import { EmployeeService } from '../../../services/employee.service';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -18,6 +19,7 @@ export class DashboardPageComponent implements OnInit {
   showCreateEmployeeForm: boolean = false;
   http = inject(HttpClient);
   allEmployees: Employee[] = [];
+  employeeService = inject(EmployeeService);
 
   ngOnInit() {
     this.fetchAllEmployees();
@@ -32,56 +34,21 @@ export class DashboardPageComponent implements OnInit {
   }
 
   CreateEmployee(data: Employee) {
-    this.http
-      .post(
-        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json',
-        data
-      )
-      .subscribe((res) => {
-        this.fetchAllEmployees();
-      });
+    this.employeeService.CreateEmployee(data);
+    this.CloseCreateEmployeeForm();
   }
 
   private fetchAllEmployees() {
-    this.http
-      .get<{ [key: string]: Employee }>(
-        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json'
-      )
-      .pipe(
-        map((res) => {
-          // convert the response to an array of employees
-          let employees = [];
-
-          for (let key in res) {
-            if (res.hasOwnProperty(key)) {
-              employees.push({ ...res[key], id: key });
-            }
-          }
-
-          return employees;
-        })
-      )
-      .subscribe((employees) => {
-        this.allEmployees = employees;
-      });
+    this.employeeService.GetAllEmployees().subscribe((employees) => {
+      this.allEmployees = employees;
+    });
   }
 
   DeleteEmployee(employeeId: string | undefined) {
-    this.http
-      .delete(
-        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees/' +
-          employeeId +
-          '.json'
-      )
-      .subscribe((res) => {
-        this.fetchAllEmployees();
-      });
+    this.employeeService.DeleteEmployee(employeeId);
   }
 
   DeleteAllEmployees() {
-    this.http.delete('https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json')
-      .subscribe(res => {
-        this.fetchAllEmployees();
-      });
+   this.employeeService.DeleteAllEmployees();
   }
 }
