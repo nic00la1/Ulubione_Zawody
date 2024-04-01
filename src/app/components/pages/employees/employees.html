@@ -27,11 +27,17 @@
         </div>
         <div class="card-footer text-end">
           <div class="row">
-            <div class="col-12 ">
-              <button class="btn btn-sm btn-outline-primary m-1" (click)="onEdit(item)">
+            <div class="col-12">
+              <button
+                class="btn btn-sm btn-outline-primary m-1"
+                (click)="onEdit(item)"
+              >
                 Edytuj
               </button>
-              <button class="btn btn-sm btn-outline-danger" (click)="onDelete(item)">
+              <button
+                class="btn btn-sm btn-outline-danger"
+                (click)="onDelete(item)"
+              >
                 Usuń
               </button>
             </div>
@@ -67,47 +73,38 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form class="row">
-            <div class="col-5">
-              <label for="">Imię</label>
-              <input
+          <form class="row" [formGroup]="employeeForm">
+            <div class="col-6">
+              <text-input
+                [control]="fc['name']"
+                [showErrorsWhen]="isSubmitted"
                 type="text"
-                [(ngModel)]="employeeObj.name"
-                name="employeeName"
-                class="form-control"
-                placeholder="Imię"
+                label="Imię"
               />
             </div>
-            <div class="col-5">
-              <label for="">Nazwisko</label>
-              <input
+            <div class="col-6">
+              <text-input
+                [control]="fc['surname']"
+                [showErrorsWhen]="isSubmitted"
                 type="text"
-                [(ngModel)]="employeeObj.surname"
-                name="employeeSurname"
-                class="form-control"
-                placeholder="Nazwisko"
+                label="Nazwisko"
               />
             </div>
           </form>
           <div class="row">
-            <div class="col-5">
-              <label for="">Email</label>
-              <input
+            <div class="col-6">
+              <text-input
+                [control]="fc['email']"
+                [showErrorsWhen]="isSubmitted"
                 type="email"
-                [(ngModel)]="employeeObj.email"
-                name="employeeEmail"
-                class="form-control"
-                placeholder="Email"
-              />
+                label="Email"/>
             </div>
-            <div class="col-5">
-              <label for="">Stanowisko</label>
-              <input
+            <div class="col-6">
+              <text-input
+                [control]="fc['profession']"
+                [showErrorsWhen]="isSubmitted"
                 type="text"
-                [(ngModel)]="employeeObj.profession"
-                name="employeeProfession"
-                class="form-control"
-                placeholder="Stanowisko"
+                label="Stanowisko"
               />
             </div>
           </div>
@@ -124,7 +121,7 @@
               Zapisz
             </button>
             } @else {
-              <button
+            <button
               type="button"
               class="btn btn-success"
               (click)="updateEmployee()"
