@@ -1,21 +1,50 @@
-<div class="container">
-    <app-message class="m-2"></app-message>
-    <form class="container form-group">
-        <h3>Dodaj pracownika</h3>
-        <label for="name">Imie pracownika </label>
-        <input id="name" #employeeName class="form-control"/>
+@if (showCreateEmployeeForm) {
+<our-employees
+  (CloseForm)="CloseCreateEmployeeForm()"
+  (EmitTaskData)="CreateEmployee($event)"
+  [isEditMode]="editMode"
+  [selectedEmployee]="selectedEmployee"
+></our-employees>
+}
 
-        <label for="surname">Nazwisko pracownika</label>
-        <input id="surname" #employeeSurname class="form-control"/>
+<div class="dashboard-container">
+  <div style="display: flex">
+    <div style="width: 50%">
+      <h2>Dashboard</h2>
+    </div>
+    <div style="width: 50%; text-align: right">
+      <button class="create-task-btn" (click)="OpenCreateEmployeeForm()">
+        Dodaj pracownika
+      </button>
+      <button class="create-task-btn" (click)="DeleteAllEmployees()">
+        Usuń wszystkich pracowników
+      </button>
+    </div>
+  </div>
 
-        <label for="age">Wiek pracownika</label>
-        <input type="number" id="age" #employeeAge class="form-control"/>
+  <hr />
 
-        <label for="proffesion">Stanowisko pracownika</label>
-        <input id="proffesion" #employeePosition class="form-control"/>
-         <!-- (click) passes input value to add() and then clears the input -->
-         <button type="submit" class="btn btn-primary m-2"> Dodaj
-       </button>
-    </form>
-    
+  <div class="dashboard-item-container">
+    @if (allEmployees.length === 0) {
+    <div style="color: red;">
+        <strong>Brak pracowników!</strong>
+    </div>
+    }
+    @for (employee of allEmployees; track $index) {
+    <div class="task-item task-open">
+      <div class="task-title">
+        <strong>{{ employee.name }}</strong>
+      </div>
+      <div class="task-content">
+        <p>{{ employee.profession }}</p>
+        <p>{{ employee.email }}</p>
+      </div>
+      <div class="task-action-icons">
+        <button class="btn btn-sm btn-outline-info">Info</button>
+        <button class="btn btn-sm btn-outline-primary" (click)="onEditEmployeeClicked(employee.id)">Edytuj</button>
+        <button class="btn btn-sm btn-outline-danger" (click)="DeleteEmployee(employee.id)">Usuń</button>
+      </div>
+    </div>
+    }
+  </div>
 </div>

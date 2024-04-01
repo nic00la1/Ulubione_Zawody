@@ -1,59 +1,73 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Employee } from '../shared/models/Employee';
-import { sample_employees } from '../../data';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
+  http = inject(HttpClient);
 
-  constructor() { }
-
-  getAll() : Employee[] {
-    return sample_employees
+  CreateEmployee(employee: Employee) {
+    const headers = new HttpHeaders({ 'my-header': 'hello-world' });
+    this.http
+      .post(
+        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json',
+        employee,
+        { headers: headers } // add headers to the request
+      )
+      .subscribe((res) => {
+        // Fetch the fresh list of employees
+        this.GetAllEmployees().subscribe((employees) => {
+          console.log(employees);
+        });
+      });
   }
 
-  onDelete(employeeList: Employee[], item: Employee): Employee[] {
-    const isDelete = confirm('Jesteś pewny, że chcesz usunąć tego pracownika?');
-    if (isDelete) {
-      const currentRecord = employeeList.findIndex((x) => x.id === item.id);
-      employeeList.splice(currentRecord, 1);
-      localStorage.setItem('angular17crud', JSON.stringify(employeeList));
-    }
-    return employeeList;
+  DeleteEmployee(id: string | undefined) {
+    this.http
+      .delete(
+        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees/' +
+          id +
+          '.json'
+      )
+      .subscribe((res) => {
+        // Fetch the fresh list of employees
+        this.GetAllEmployees().subscribe((employees) => {
+          console.log(employees);
+        });
+      });
   }
 
-  onEdit(item: Employee): Employee {
-    return item;
+  DeleteAllEmployees() {
+    this.http
+      .delete(
+        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json'
+      )
+      .subscribe((res) => {
+        // Fetch the data after deletion
+      
+      });
   }
 
-  updateEmployee(employeeList: Employee[], employeeObj: Employee): Employee[] {
-    const currentRecord = employeeList.find((x) => x.id === employeeObj.id);
-    if (currentRecord != undefined) {
-      currentRecord.name = employeeObj.name;
-      currentRecord.surname = employeeObj.surname;
-      currentRecord.email = employeeObj.email;
-      currentRecord.profession = employeeObj.profession;
-    }
-    localStorage.setItem('angular17crud', JSON.stringify(employeeList));
-    return employeeList;
-  }
+  GetAllEmployees() {
+    return this.http
+      .get<{ [key: string]: Employee }>(
+        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json'
+      )
+      .pipe(
+        map((res) => {
+          // convert the response to an array of employees
+          let employees = [];
 
-  saveEmployee(employeeList: Employee[], employeeObj: Employee): Employee[] {
-    const isLocalPresent = localStorage.getItem('angular17crud');
-    if (isLocalPresent != null) {
-      const oldEmployee = JSON.parse(isLocalPresent);
-      employeeObj.id = oldEmployee.length + 1;
-      oldEmployee.push(employeeObj);
-      employeeList = oldEmployee;
-      localStorage.setItem('angular17crud', JSON.stringify(oldEmployee));
-    } else {
-      const newEmployee = [];
-      newEmployee.push(employeeObj);
-      employeeObj.id = 1;
-      employeeList = newEmployee;
-      localStorage.setItem('angular17crud', JSON.stringify(newEmployee));
-    }
-    return employeeList;
+          for (let key in res) {
+            if (res.hasOwnProperty(key)) {
+              employees.push({ ...res[key], id: key });
+            }
+          }
+          return employees;
+        })
+      );
   }
 }

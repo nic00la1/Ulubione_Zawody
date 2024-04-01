@@ -1,0 +1,32 @@
+<div class="overlay">
+	<div class="popup">
+		<h2>{{isEditMode ? 'Edytuj Pracownika' : 'Utwórz nowego pracownika'}}</h2>
+		<a class="close" href="#" (click)="OnCloseForm()">&times;</a>
+		<div class="content">
+			<section class="container">
+                <form action="#" class="form" #employeeForm="ngForm" (ngSubmit)="OnFormSubmitted(employeeForm)">
+                  <div class="input-box">
+                    <label>Imię</label>
+                    <input type="text" required name="name" ngModel/>
+                  </div>
+                  <div class="input-box">
+                    <label>Nazwisko</label>
+                    <input type="text" required name="surname" ngModel/>
+                  </div>
+                  <div class="input-box">
+                    <label>Email</label>
+                    <input type="email" required name="email" ngModel/>
+                  </div>
+                  <div class="input-box">
+                    <label>Stanowisko</label>
+                    <input type="text" required name="profession" ngModel />
+                  </div>
+                 
+                  <button type="submit">{{isEditMode ? 'Edytuj Pracownika' : 'Dodaj Pracownika'}}</button>
+                </form>
+              </section>
+		</div>
+	</div>
+</div>
+
+
