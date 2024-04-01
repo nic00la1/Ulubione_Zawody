@@ -28,18 +28,8 @@
         <div class="card-footer text-end">
           <div class="row">
             <div class="col-12">
-              <button
-                class="btn btn-sm btn-outline-primary m-1"
-                (click)="onEdit(item)"
-              >
-                Edytuj
-              </button>
-              <button
-                class="btn btn-sm btn-outline-danger"
-                (click)="onDelete(item)"
-              >
-                Usuń
-              </button>
+              <button class="btn btn-sm btn-outline-primary m-1">Edytuj</button>
+              <button class="btn btn-sm btn-outline-danger">Usuń</button>
             </div>
           </div>
         </div>
@@ -73,61 +63,55 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form class="row" [formGroup]="employeeForm">
-            <div class="col-6">
-              <text-input
-                [control]="fc['name']"
-                [showErrorsWhen]="isSubmitted"
-                type="text"
-                label="Imię"
-              />
+          <form class="form" #taskForm="ngForm">
+            <div class="row">
+              <div class="col-6">
+                <label>Imię</label>
+                <input class="form-control" type="text" required name="name" ngModel/>
+              </div>
+              <div class="col-6">
+                <label>Nazwisko</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  required
+                  name="surname"
+                  ngModel
+                />
+              </div>
             </div>
-            <div class="col-6">
-              <text-input
-                [control]="fc['surname']"
-                [showErrorsWhen]="isSubmitted"
-                type="text"
-                label="Nazwisko"
-              />
+            <div class="row">
+              <div class="col-6">
+                <label>Email</label>
+                <input
+                  class="form-control"
+                  type="email"
+                  required
+                  name="email"
+                  ngModel
+                />
+              </div>
+              <div class="col-6">
+                <label>Zawód</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  required
+                  name="profession"
+                  ngModel
+                />
+              </div>
             </div>
           </form>
-          <div class="row">
-            <div class="col-6">
-              <text-input
-                [control]="fc['email']"
-                [showErrorsWhen]="isSubmitted"
-                type="email"
-                label="Email"/>
-            </div>
-            <div class="col-6">
-              <text-input
-                [control]="fc['profession']"
-                [showErrorsWhen]="isSubmitted"
-                type="text"
-                label="Stanowisko"
-              />
-            </div>
-          </div>
+
           <div class="modal-footer mt-2">
             <button type="button" class="btn btn-danger" (click)="closeModal()">
               Zamknij
             </button>
             @if (employeeObj.id == 0) {
-            <button
-              type="button"
-              class="btn btn-primary"
-              (click)="saveEmployee()"
-            >
-              Zapisz
-            </button>
+            <button type="button" class="btn btn-primary" (click)="addEmployee(taskForm)">Dodaj</button>
             } @else {
-            <button
-              type="button"
-              class="btn btn-success"
-              (click)="updateEmployee()"
-            >
-              Edytuj
-            </button>
+            <button type="button" class="btn btn-success">Edytuj</button>
             }
           </div>
         </div>

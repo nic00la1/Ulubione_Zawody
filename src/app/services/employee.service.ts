@@ -11,12 +11,12 @@ export class EmployeeService {
   constructor() { }
 
   getAll() : Employee[] {
-    const isLocalPresent = localStorage.getItem('angular17crud');
-    if (isLocalPresent != null) {
-      return JSON.parse(isLocalPresent);
-    } else {
-      return sample_employees;
+    let employeeList = localStorage.getItem('angular17crud');
+    if (employeeList == null) {
+      employeeList = JSON.stringify([sample_employees]);
+      localStorage.setItem('angular17crud', employeeList);
     }
+    return JSON.parse(employeeList);
   }
 
   onDelete(employeeList: Employee[], item: Employee): Employee[] {
@@ -33,21 +33,16 @@ export class EmployeeService {
     return item;
   }
 
-  updateEmployee(employeeList: Employee[], employeeForm: FormGroup): Employee[] 
-  {
-    const employeeObj = employeeForm.value;
-    const currentRecord = employeeList.find((x) => x.id === employeeObj.id);
-    if (currentRecord != undefined) {
-      currentRecord.name = employeeObj.name;
-      currentRecord.surname = employeeObj.surname;
-      currentRecord.email = employeeObj.email;
-      currentRecord.profession = employeeObj.profession;
+  updateEmployee(employeeList: Employee[], updatedEmployee: Employee): Employee[] {
+    const currentRecord = employeeList.findIndex((x) => x.id === updatedEmployee.id);
+    if (currentRecord !== -1) {
+      employeeList[currentRecord] = updatedEmployee;
+      localStorage.setItem('angular17crud', JSON.stringify(employeeList));
     }
-    localStorage.setItem('angular17crud', JSON.stringify(employeeList));
     return employeeList;
   }
 
-  saveEmployee(employeeList: Employee[], employeeForm: FormGroup): Employee[] {
+  addEmployee(employeeList: Employee[], employeeForm: FormGroup): Employee[] {
     const isLocalPresent = localStorage.getItem('angular17crud');
     const employeeObj = employeeForm.value;
     if (isLocalPresent != null) {
