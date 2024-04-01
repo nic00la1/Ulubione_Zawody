@@ -14,12 +14,20 @@
       <button class="create-task-btn" (click)="OpenCreateEmployeeForm()">
         Dodaj pracownika
       </button>
+      <button class="create-task-btn" (click)="DeleteAllEmployees()">
+        Usuń wszystkich pracowników
+      </button>
     </div>
   </div>
 
   <hr />
 
   <div class="dashboard-item-container">
+    @if (allEmployees.length === 0) {
+    <div style="color: red;">
+        <strong>Brak pracowników!</strong>
+    </div>
+    }
     @for (employee of allEmployees; track $index) {
     <div class="task-item task-open">
       <div class="task-title">
@@ -32,7 +40,7 @@
       <div class="task-action-icons">
         <button class="btn btn-sm btn-outline-info">Info</button>
         <button class="btn btn-sm btn-outline-primary">Edytuj</button>
-        <button class="btn btn-sm btn-outline-danger">Usuń</button>
+        <button class="btn btn-sm btn-outline-danger" (click)="DeleteEmployee(employee.id)">Usuń</button>
       </div>
     </div>
     }

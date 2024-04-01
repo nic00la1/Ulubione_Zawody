@@ -23,7 +23,6 @@ export class DashboardPageComponent implements OnInit {
     this.fetchAllEmployees();
   }
 
-
   OpenCreateEmployeeForm() {
     this.showCreateEmployeeForm = true;
   }
@@ -32,14 +31,14 @@ export class DashboardPageComponent implements OnInit {
     this.showCreateEmployeeForm = false;
   }
 
-  CreateEmployee(data: Employee) { 
+  CreateEmployee(data: Employee) {
     this.http
       .post(
         'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json',
         data
       )
       .subscribe((res) => {
-           this.fetchAllEmployees();
+        this.fetchAllEmployees();
       });
   }
 
@@ -47,20 +46,42 @@ export class DashboardPageComponent implements OnInit {
     this.http
       .get<{ [key: string]: Employee }>(
         'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json'
-      ).pipe(map((res) => {
-        // convert the response to an array of employees
-        let employees = [];
+      )
+      .pipe(
+        map((res) => {
+          // convert the response to an array of employees
+          let employees = [];
 
-        for (let key in res) {
-          if (res.hasOwnProperty(key)) {
-            employees.push({ ...res[key], id: key });
+          for (let key in res) {
+            if (res.hasOwnProperty(key)) {
+              employees.push({ ...res[key], id: key });
+            }
           }
-        }
 
-        return employees;
-      }))
+          return employees;
+        })
+      )
       .subscribe((employees) => {
         this.allEmployees = employees;
+      });
+  }
+
+  DeleteEmployee(employeeId: string | undefined) {
+    this.http
+      .delete(
+        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees/' +
+          employeeId +
+          '.json'
+      )
+      .subscribe((res) => {
+        this.fetchAllEmployees();
+      });
+  }
+
+  DeleteAllEmployees() {
+    this.http.delete('https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json')
+      .subscribe(res => {
+        this.fetchAllEmployees();
       });
   }
 }
