@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Employee } from '../shared/models/Employee';
 import { sample_employees } from '../../data';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,12 @@ export class EmployeeService {
   constructor() { }
 
   getAll() : Employee[] {
-    return sample_employees
+    const isLocalPresent = localStorage.getItem('angular17crud');
+    if (isLocalPresent != null) {
+      return JSON.parse(isLocalPresent);
+    } else {
+      return sample_employees;
+    }
   }
 
   onDelete(employeeList: Employee[], item: Employee): Employee[] {
@@ -27,7 +33,9 @@ export class EmployeeService {
     return item;
   }
 
-  updateEmployee(employeeList: Employee[], employeeObj: Employee): Employee[] {
+  updateEmployee(employeeList: Employee[], employeeForm: FormGroup): Employee[] 
+  {
+    const employeeObj = employeeForm.value;
     const currentRecord = employeeList.find((x) => x.id === employeeObj.id);
     if (currentRecord != undefined) {
       currentRecord.name = employeeObj.name;
@@ -39,8 +47,9 @@ export class EmployeeService {
     return employeeList;
   }
 
-  saveEmployee(employeeList: Employee[], employeeObj: Employee): Employee[] {
+  saveEmployee(employeeList: Employee[], employeeForm: FormGroup): Employee[] {
     const isLocalPresent = localStorage.getItem('angular17crud');
+    const employeeObj = employeeForm.value;
     if (isLocalPresent != null) {
       const oldEmployee = JSON.parse(isLocalPresent);
       employeeObj.id = oldEmployee.length + 1;

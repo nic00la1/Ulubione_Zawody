@@ -39,10 +39,7 @@ export class OurEmployeesComponent implements OnInit {
   }
 
   displayEmployees() {
-    const employees = localStorage.getItem('employees');
-    if (employees) {
-      this.employeeList = JSON.parse(employees);
-    } 
+    this.employeeList = this.employeeService.getAll();
   }
 
   openModal() {
@@ -61,18 +58,8 @@ export class OurEmployeesComponent implements OnInit {
 
   saveEmployee() {
     this.isSubmitted = true;
-    if (this.employeeForm.invalid) return;
-    
-
-    this.employeeService.saveEmployee(this.employeeList, {
-      name: this.fc['name'].value,
-      surname: this.fc['surname'].value,
-      email: this.fc['email'].value,
-      profession: this.fc['profession'].value,
-      id: 0,
-      token: '',
-      isAdmin: false
-    })
+    this.employeeList = this.employeeService.saveEmployee(this.employeeList, this.employeeForm);
+    this.closeModal();
   }
 
   onDelete(item: Employee) {
@@ -82,10 +69,11 @@ export class OurEmployeesComponent implements OnInit {
   onEdit(item: Employee) {
     this.employeeObj = this.employeeService.onEdit(item);
     this.openModal();
+    
   }
   
   updateEmployee() {
-    this.employeeList = this.employeeService.updateEmployee(this.employeeList, this.employeeObj);
+    this.employeeList = this.employeeService.updateEmployee(this.employeeList, this.employeeForm);
     this.closeModal();
   }
   
