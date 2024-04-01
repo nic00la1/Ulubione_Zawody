@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   Output,
   ViewChild,
   inject,
@@ -21,34 +22,19 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './employees.css',
 })
 export class OurEmployeesComponent {
-  @ViewChild('myModal') modal: ElementRef | undefined;
-  employeeObj: Employee = new Employee();
-  employeeList: Employee[] = [];
+  @Output()
+  CloseForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output()
   EmitTaskdata: EventEmitter<Employee> = new EventEmitter<Employee>();
 
 
-  openModal() {
-    const modal = document.getElementById('myModal');
-    if (modal != null) {
-      modal.style.display = 'block';
-    }
+  OnCloseForm(){
+    this.CloseForm.emit(false);
   }
 
-  closeModal() {
-    this.employeeObj = new Employee();
-    if (this.modal != null) {
-      this.modal.nativeElement.style.display = 'none';
-    }
-  }
-
-  addEmployee(form: NgForm) {
+  OnFormSubmitted(form: NgForm) {
     this.EmitTaskdata.emit(form.value);
-    console.log(form.value)
-    this.closeModal();
+    this.CloseForm.emit(false);
   }
-
- 
-
 }

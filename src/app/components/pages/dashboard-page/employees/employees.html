@@ -1,121 +1,32 @@
-<div class="container">
-  <div class="row pt-3">
-    <div class="col-6">
-      <h1>Nasi pracownicy</h1>
-    </div>
-    <div class="col-6 text-end">
-      <button class="btn btn-outline-success" (click)="openModal()">
-        Dodaj
-      </button>
-    </div>
-  </div>
-  @if(employeeList.length !== 0) {
-  <div class="row">
-    @for (item of employeeList; track $index) {
-    <div class="col-4">
-      <div class="card">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-12">
-              <strong>{{item.name}} {{item.surname}}</strong>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p>{{item.email}}</p>
-          <p>{{item.profession}}</p>
-        </div>
-        <div class="card-footer text-end">
-          <div class="row">
-            <div class="col-12">
-              <button class="btn btn-sm btn-outline-primary m-1">Edytuj</button>
-              <button class="btn btn-sm btn-outline-danger">Usuń</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    }
-  </div>
-  } @else {
-  <div class="row">
-    <div
-      class="col-12 text-center p-4 border border-danger rounded bg-light shadow-lg"
-    >
-      <p class="text-danger">
-        <strong>Nie znaleziono pracowników. Utwórz nowy rekord</strong>
-      </p>
-    </div>
-  </div>
-
-  }
-
-  <!-- The Modal -->
-  <div class="modal" id="myModal" #myModal>
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Utwórz Nowego Pracownika</h4>
-          <button
-            type="button"
-            class="btn-close"
-            (click)="closeModal()"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <form class="form" #taskForm="ngForm">
-            <div class="row">
-              <div class="col-6">
-                <label>Imię</label>
-                <input class="form-control" type="text" required name="name" ngModel/>
-              </div>
-              <div class="col-6">
-                <label>Nazwisko</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  required
-                  name="surname"
-                  ngModel
-                />
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <label>Email</label>
-                <input
-                  class="form-control"
-                  type="email"
-                  required
-                  name="email"
-                  ngModel
-                />
-              </div>
-              <div class="col-6">
-                <label>Zawód</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  required
-                  name="profession"
-                  ngModel
-                />
-              </div>
-            </div>
-          </form>
-
-          <div class="modal-footer mt-2">
-            <button type="button" class="btn btn-danger" (click)="closeModal()">
-              Zamknij
-            </button>
-            @if (employeeObj.id == 0) {
-            <button type="button" class="btn btn-primary" (click)="addEmployee(taskForm)">Dodaj</button>
-            } @else {
-            <button type="button" class="btn btn-success">Edytuj</button>
-            }
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="overlay">
+	<div class="popup">
+		<h2>Dodaj nowego pracwonika</h2>
+		<a class="close" href="#" (click)="OnCloseForm()">&times;</a>
+		<div class="content">
+			<section class="container">
+                <form action="#" class="form" #taskForm="ngForm">
+                  <div class="input-box">
+                    <label>Imię</label>
+                    <input type="text" required name="name"/>
+                  </div>
+                  <div class="input-box">
+                    <label>Nazwisko</label>
+                    <input type="text" required name="surname"/>
+                  </div>
+                  <div class="input-box">
+                    <label>Email</label>
+                    <input type="email" required name="email"/>
+                  </div>
+                  <div class="input-box">
+                    <label>Stanowisko</label>
+                    <input type="text" required name="profession"/>
+                  </div>
+                 
+                  <button>Dodaj pracownika</button>
+                </form>
+              </section>
+		</div>
+	</div>
 </div>
+
+

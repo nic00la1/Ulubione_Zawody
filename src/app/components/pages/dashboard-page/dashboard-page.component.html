@@ -1,5 +1,38 @@
-<our-employees (EmitTaskdata)="CreateEmployee($event)"></our-employees>
+@if (showCreateEmployeeForm) {
+<our-employees (CloseForm)="CloseCreateEmployeeForm()"></our-employees>
+}
 
-<div class="container">
-    <h2>Dashboard</h2>
+<div class="dashboard-container">
+  <div style="display: flex">
+    <div style="width: 50%">
+      <h2>Dashboard</h2>
+    </div>
+    <div style="width: 50%; text-align: right">
+      <button class="create-task-btn" (click)="OpenCreateEmployeeForm()">
+        Dodaj pracownika
+      </button>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="dashboard-item-container">
+    @for (employee of allEmployees; track $index) {
+        <div class="task-item task-open">
+            <div class="task-title">
+              <strong>{{employee.name}}</strong>
+            </div>
+            <div class="task-content">
+              <p>{{employee.profession}}</p>
+              <p>{{employee.email}}</p>
+            </div>
+              <div class="task-action-icons">
+                  <button class="btn btn-sm btn-outline-info">Info</button>
+                  <button class="btn btn-sm btn-outline-primary">Edytuj</button>
+                  <button class="btn btn-sm btn-outline-danger">Usuń</button>
+              </div>
+          </div>
+    }
+    
+  </div>
 </div>

@@ -15,10 +15,21 @@ import { map } from 'rxjs';
   styleUrl: './dashboard-page.component.css',
 })
 export class DashboardPageComponent implements OnInit {
+  showCreateEmployeeForm: boolean = false;
   http = inject(HttpClient);
+  allEmployees: Employee[] = [];
 
   ngOnInit() {
     this.fetchAllEmployees();
+  }
+
+
+  OpenCreateEmployeeForm() {
+    this.showCreateEmployeeForm = true;
+  }
+
+  CloseCreateEmployeeForm() {
+    this.showCreateEmployeeForm = false;
   }
 
   CreateEmployee(data: Employee) {
@@ -49,7 +60,7 @@ export class DashboardPageComponent implements OnInit {
         return employees;
       }))
       .subscribe((res) => {
-        console.log(res);
+        this.allEmployees = res;
       });
   }
 }

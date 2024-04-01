@@ -4,8 +4,6 @@ import { OurEmployeesComponent } from './components/pages/dashboard-page/employe
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'employees', pathMatch: 'full'},
-    {path: 'dashboard', component: DashboardPageComponent},
-    {path: 'employees', component: OurEmployeesComponent},
+    {path: '', component: DashboardPageComponent},
     {path: 'login', component: LoginPageComponent}
 ];
