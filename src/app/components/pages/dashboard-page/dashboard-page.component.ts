@@ -32,14 +32,14 @@ export class DashboardPageComponent implements OnInit {
     this.showCreateEmployeeForm = false;
   }
 
-  CreateEmployee(data: Employee) {
+  CreateEmployee(data: Employee) { 
     this.http
       .post(
         'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json',
         data
       )
       .subscribe((res) => {
-        console.log(res);
+           this.fetchAllEmployees();
       });
   }
 
@@ -49,9 +49,9 @@ export class DashboardPageComponent implements OnInit {
         'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json'
       ).pipe(map((res) => {
         // convert the response to an array of employees
-        const employees = [];
+        let employees = [];
 
-        for (const key in res) {
+        for (let key in res) {
           if (res.hasOwnProperty(key)) {
             employees.push({ ...res[key], id: key });
           }
@@ -59,8 +59,8 @@ export class DashboardPageComponent implements OnInit {
 
         return employees;
       }))
-      .subscribe((res) => {
-        this.allEmployees = res;
+      .subscribe((employees) => {
+        this.allEmployees = employees;
       });
   }
 }

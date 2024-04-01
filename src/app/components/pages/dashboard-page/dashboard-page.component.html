@@ -1,5 +1,8 @@
 @if (showCreateEmployeeForm) {
-<our-employees (CloseForm)="CloseCreateEmployeeForm()"></our-employees>
+<our-employees
+  (CloseForm)="CloseCreateEmployeeForm()"
+  (EmitTaskData)="CreateEmployee($event)"
+></our-employees>
 }
 
 <div class="dashboard-container">
@@ -18,21 +21,20 @@
 
   <div class="dashboard-item-container">
     @for (employee of allEmployees; track $index) {
-        <div class="task-item task-open">
-            <div class="task-title">
-              <strong>{{employee.name}}</strong>
-            </div>
-            <div class="task-content">
-              <p>{{employee.profession}}</p>
-              <p>{{employee.email}}</p>
-            </div>
-              <div class="task-action-icons">
-                  <button class="btn btn-sm btn-outline-info">Info</button>
-                  <button class="btn btn-sm btn-outline-primary">Edytuj</button>
-                  <button class="btn btn-sm btn-outline-danger">Usuń</button>
-              </div>
-          </div>
+    <div class="task-item task-open">
+      <div class="task-title">
+        <strong>{{ employee.name }}</strong>
+      </div>
+      <div class="task-content">
+        <p>{{ employee.profession }}</p>
+        <p>{{ employee.email }}</p>
+      </div>
+      <div class="task-action-icons">
+        <button class="btn btn-sm btn-outline-info">Info</button>
+        <button class="btn btn-sm btn-outline-primary">Edytuj</button>
+        <button class="btn btn-sm btn-outline-danger">Usuń</button>
+      </div>
+    </div>
     }
-    
   </div>
 </div>

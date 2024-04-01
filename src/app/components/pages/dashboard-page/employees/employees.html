@@ -4,25 +4,25 @@
 		<a class="close" href="#" (click)="OnCloseForm()">&times;</a>
 		<div class="content">
 			<section class="container">
-                <form action="#" class="form" #taskForm="ngForm">
+                <form action="#" class="form" #taskForm="ngForm" (ngSubmit)="OnFormSubmitted(taskForm)">
                   <div class="input-box">
                     <label>Imię</label>
-                    <input type="text" required name="name"/>
+                    <input type="text" required name="name" ngModel/>
                   </div>
                   <div class="input-box">
                     <label>Nazwisko</label>
-                    <input type="text" required name="surname"/>
+                    <input type="text" required name="surname" ngModel/>
                   </div>
                   <div class="input-box">
                     <label>Email</label>
-                    <input type="email" required name="email"/>
+                    <input type="email" required name="email" ngModel/>
                   </div>
                   <div class="input-box">
                     <label>Stanowisko</label>
-                    <input type="text" required name="profession"/>
+                    <input type="text" required name="profession" ngModel />
                   </div>
                  
-                  <button>Dodaj pracownika</button>
+                  <button type="submit">Dodaj pracownika</button>
                 </form>
               </section>
 		</div>

@@ -26,7 +26,7 @@ export class OurEmployeesComponent {
   CloseForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output()
-  EmitTaskdata: EventEmitter<Employee> = new EventEmitter<Employee>();
+  EmitTaskData: EventEmitter<Employee> = new EventEmitter<Employee>();
 
 
   OnCloseForm(){
@@ -34,7 +34,7 @@ export class OurEmployeesComponent {
   }
 
   OnFormSubmitted(form: NgForm) {
-    this.EmitTaskdata.emit(form.value);
+    this.EmitTaskData.emit(form.value);
     this.CloseForm.emit(false);
   }
 }

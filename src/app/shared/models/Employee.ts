@@ -1,9 +1,9 @@
 export class Employee {
-    id ?: string;
-    email !: string;
-    name !: string;
-    surname !: string;
-    profession !: string;
-    token !: string;
-    isAdmin !: boolean;        
+    constructor(
+        public name: string,
+        public surname: string,
+        public email: string,
+        public profession: string,
+        public id?: string
+    ) {}
 } 
