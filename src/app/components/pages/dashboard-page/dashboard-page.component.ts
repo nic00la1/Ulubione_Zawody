@@ -21,6 +21,7 @@ export class DashboardPageComponent implements OnInit {
   allEmployees: Employee[] = [];
   employeeService = inject(EmployeeService);
   currentEmployeeId : string = '';
+  isLoading: boolean = false;
 
   editMode : boolean = false;
   selectedEmployee !: Employee 
@@ -50,9 +51,16 @@ export class DashboardPageComponent implements OnInit {
       
   }
 
+  FetchAllEmployeeClicked() {
+    this.fetchAllEmployees();
+  }
+  
+
   private fetchAllEmployees() {
+    this.isLoading = true;
     this.employeeService.GetAllEmployees().subscribe((employees) => {
       this.allEmployees = employees;
+      this.isLoading = false;
     });
   }
 

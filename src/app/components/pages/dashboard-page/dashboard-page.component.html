@@ -12,11 +12,23 @@
     <div style="width: 50%">
       <h2>Dashboard</h2>
     </div>
-    <div style="width: 50%; text-align: right">
-      <button class="create-task-btn" (click)="OpenCreateEmployeeForm()">
+    <div style="width: 50%; text-align: right" class="m-2">
+      <button
+        class="btn btn-sm btn-success shadow"
+        (click)="OpenCreateEmployeeForm()"
+      >
         Dodaj pracownika
       </button>
-      <button class="create-task-btn" (click)="DeleteAllEmployees()">
+      <button
+        class="btn btn-sm btn-light shadow"
+        (click)="FetchAllEmployeeClicked()"
+      >
+        Załaduj pracowników
+      </button>
+      <button
+        class="btn btn-sm btn-danger shadow"
+        (click)="DeleteAllEmployees()"
+      >
         Usuń wszystkich pracowników
       </button>
     </div>
@@ -25,26 +37,41 @@
   <hr />
 
   <div class="dashboard-item-container">
-    @if (allEmployees.length === 0) {
-    <div style="color: red;">
-        <strong>Brak pracowników!</strong>
+    @if (isLoading) {
+    <div class="loader"></div>
+    } @if ( !isLoading && allEmployees.length < 1) {
+    <div style="color: red">
+      <strong>Brak pracowników!</strong>
     </div>
-    }
-    @for (employee of allEmployees; track $index) {
-    <div class="task-item task-open">
-      <div class="task-title">
-        <strong>{{ employee.name }} {{employee.surname}}</strong>
+    } @if (!isLoading) {
+    <ng-container>
+      @for (employee of allEmployees; track $index) {
+      <div class="task-item task-open">
+        <div class="task-title">
+          <strong>{{ employee.name }} {{ employee.surname }}</strong>
+        </div>
+        <div class="task-content">
+          <p>{{ employee.profession }}</p>
+          <p>{{ employee.email }}</p>
+        </div>
+        <div class="task-action-icons">
+          <button class="btn btn-sm btn-outline-info">Info</button>
+          <button
+            class="btn btn-sm btn-outline-primary"
+            (click)="onEditEmployeeClicked(employee.id)"
+          >
+            Edytuj
+          </button>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            (click)="DeleteEmployee(employee.id)"
+          >
+            Usuń
+          </button>
+        </div>
       </div>
-      <div class="task-content">
-        <p>{{ employee.profession }}</p>
-        <p>{{ employee.email }}</p>
-      </div>
-      <div class="task-action-icons">
-        <button class="btn btn-sm btn-outline-info">Info</button>
-        <button class="btn btn-sm btn-outline-primary" (click)="onEditEmployeeClicked(employee.id)">Edytuj</button>
-        <button class="btn btn-sm btn-outline-danger" (click)="DeleteEmployee(employee.id)">Usuń</button>
-      </div>
-    </div>
+      }
+    </ng-container>
     }
   </div>
 </div>
