@@ -17,12 +17,7 @@ export class EmployeeService {
         employee,
         { headers: headers } // add headers to the request
       )
-      .subscribe((res) => {
-        // Fetch the fresh list of employees
-        this.GetAllEmployees().subscribe((employees) => {
-          console.log(employees);
-        });
-      });
+      .subscribe();
   }
 
   DeleteEmployee(id: string | undefined) {
@@ -32,12 +27,7 @@ export class EmployeeService {
           id +
           '.json'
       )
-      .subscribe((res) => {
-        // Fetch the fresh list of employees
-        this.GetAllEmployees().subscribe((employees) => {
-          console.log(employees);
-        });
-      });
+      .subscribe();
   }
 
   DeleteAllEmployees() {
@@ -45,10 +35,7 @@ export class EmployeeService {
       .delete(
         'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json'
       )
-      .subscribe((res) => {
-        // Fetch the data after deletion
-      
-      });
+      .subscribe();
   }
 
   GetAllEmployees() {
@@ -69,5 +56,10 @@ export class EmployeeService {
           return employees;
         })
       );
+  }
+
+  UpdateEmployee(id: string | undefined, data: Employee) {
+    this.http.put('https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees/' + id + '.json', data)
+    .subscribe();
   }
 }

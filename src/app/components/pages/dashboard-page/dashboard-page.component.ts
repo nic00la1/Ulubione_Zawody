@@ -20,6 +20,7 @@ export class DashboardPageComponent implements OnInit {
   http = inject(HttpClient);
   allEmployees: Employee[] = [];
   employeeService = inject(EmployeeService);
+  currentEmployeeId : string = '';
 
   editMode : boolean = false;
   selectedEmployee !: Employee 
@@ -38,9 +39,15 @@ export class DashboardPageComponent implements OnInit {
     this.showCreateEmployeeForm = false;
   }
 
-  CreateEmployee(data: Employee) {
-    this.employeeService.CreateEmployee(data);
-    this.CloseCreateEmployeeForm();
+  CreateOrUpdateEmployee(data: Employee) {
+    if(!this.editMode) {
+      this.employeeService.CreateEmployee(data);
+    }
+    else {
+      // edit employee
+      this.employeeService.UpdateEmployee(this.currentEmployeeId, data);
+    }
+      
   }
 
   private fetchAllEmployees() {
@@ -49,8 +56,8 @@ export class DashboardPageComponent implements OnInit {
     });
   }
 
-  DeleteEmployee(employeeId: string | undefined) {
-    this.employeeService.DeleteEmployee(employeeId);
+  DeleteEmployee(id: string | undefined) {
+    this.employeeService.DeleteEmployee(id);
   }
 
   DeleteAllEmployees() {
@@ -58,11 +65,13 @@ export class DashboardPageComponent implements OnInit {
   }
 
   onEditEmployeeClicked(id: string | undefined) {
+    this.currentEmployeeId = id as string;
+
     // OPEN EDIT EMPLOYEE FORM
     this.showCreateEmployeeForm = true;
     this.editMode = true;
 
-    this.selectedEmployee != this.allEmployees.find((employee) => { return employee.id === id; })
+    this.selectedEmployee = this.allEmployees.find((employee) => { return employee.id === id; }) as Employee;
   
   }
 }

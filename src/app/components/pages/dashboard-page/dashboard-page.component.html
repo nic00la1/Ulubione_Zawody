@@ -1,7 +1,7 @@
 @if (showCreateEmployeeForm) {
 <our-employees
   (CloseForm)="CloseCreateEmployeeForm()"
-  (EmitTaskData)="CreateEmployee($event)"
+  (EmitTaskData)="CreateOrUpdateEmployee($event)"
   [isEditMode]="editMode"
   [selectedEmployee]="selectedEmployee"
 ></our-employees>
@@ -33,7 +33,7 @@
     @for (employee of allEmployees; track $index) {
     <div class="task-item task-open">
       <div class="task-title">
-        <strong>{{ employee.name }}</strong>
+        <strong>{{ employee.name }} {{employee.surname}}</strong>
       </div>
       <div class="task-content">
         <p>{{ employee.profession }}</p>
