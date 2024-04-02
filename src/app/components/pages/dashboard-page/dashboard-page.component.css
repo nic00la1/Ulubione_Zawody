@@ -1,10 +1,7 @@
-.dashboard-container{
-    padding: 30px 100px;
-    background-color: #dedede;
-}
 
 hr{
-    border: #fff 1.5px solid;
+    border: #fafafa 1.5px solid;
+    border-radius: 5px;
     margin: 20px 0px;
 }
 .dashboard-item-container{
@@ -53,10 +50,17 @@ i{
 }
 
 .create-task-btn{
-    padding: 12px 30px;
+    padding: 8px 15px;
+    margin-left: 10px;
+    border: none;
     background-color: #3498DB;
-    border: #cdcdcd 1px solid;
-    color: white;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.create-task-btn:hover{
+    background-color: #2980B9;
 }
 
 .loader {
