@@ -5,6 +5,9 @@
   [isEditMode]="editMode"
   [selectedEmployee]="selectedEmployee"
 ></our-employees>
+} @if (showEmployeeDetails) {
+<employee-details (CloseInfoView)="CloseEmployeeInfo()"
+[currentEmployee]="currentEmployee"> </employee-details>
 }
 
 <div class="dashboard-container">
@@ -57,7 +60,12 @@
           <p>{{ employee.email }}</p>
         </div>
         <div class="task-action-icons">
-          <button class="btn btn-sm btn-outline-info">Info</button>
+          <button
+            class="btn btn-sm btn-outline-info"
+            (click)="showCurrentEmployeeDetails(employee.id)"
+          >
+            Info
+          </button>
           <button
             class="btn btn-sm btn-outline-primary"
             (click)="onEditEmployeeClicked(employee.id)"

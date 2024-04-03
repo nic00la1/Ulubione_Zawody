@@ -7,35 +7,46 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Subscription, map } from 'rxjs';
 import { OurEmployeesComponent } from './employees/employees';
 import { EmployeeService } from '../../../services/employee.service';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 
 @Component({
   selector: 'app-dashboard-page',
   standalone: true,
-  imports: [MessageComponent, FormsModule, CommonModule, OurEmployeesComponent],
+  imports: [
+    MessageComponent,
+    FormsModule,
+    CommonModule,
+    OurEmployeesComponent,
+    EmployeeDetailsComponent,
+  ],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.css',
 })
 export class DashboardPageComponent implements OnInit {
   showCreateEmployeeForm: boolean = false;
+  showEmployeeDetails: boolean = false;
   http = inject(HttpClient);
   allEmployees: Employee[] = [];
   employeeService = inject(EmployeeService);
   currentEmployeeId: string = '';
   isLoading: boolean = false;
 
+  currentEmployee: Employee | null = null;
+
   errorMessage: string | null = null;
 
   editMode: boolean = false;
   selectedEmployee!: Employee;
 
-  errorSub !: Subscription
+  errorSub!: Subscription;
 
   ngOnInit() {
     this.fetchAllEmployees();
-    this.errorSub = this.employeeService.errorSubject.subscribe({next : (httpError) => {
-      this.setErrorMessage(httpError);
-    }}
-    );
+    this.errorSub = this.employeeService.errorSubject.subscribe({
+      next: (httpError) => {
+        this.setErrorMessage(httpError);
+      },
+    });
   }
 
   ngOnDestroy() {
@@ -50,7 +61,22 @@ export class DashboardPageComponent implements OnInit {
       surname: '',
       email: '',
       profession: '',
+      salary: 0,
+      startDate: '',
+      isFullTime: false,
     };
+  }
+
+  showCurrentEmployeeDetails(id: string | undefined) {
+    this.showEmployeeDetails = true;
+    this.employeeService.getEmployeeInfo(id).subscribe({
+      next: (data: any) => {
+        this.currentEmployee = data as Employee;
+      },
+    });
+  }
+  CloseEmployeeInfo() {
+    this.showEmployeeDetails = false;
   }
 
   CloseCreateEmployeeForm() {
@@ -78,7 +104,7 @@ export class DashboardPageComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        this.errorMessage = error.message
+        this.errorMessage = error.message;
         this.setErrorMessage(error);
         this.isLoading = false;
       },
@@ -86,13 +112,12 @@ export class DashboardPageComponent implements OnInit {
   }
 
   private setErrorMessage(err: HttpErrorResponse) {
-    if(err.error.error === 'Permission denied') 
-      this.errorMessage = 'Nie masz uprawnień do wykonania tej operacji'
-    else 
-      this.errorMessage = err.message;
-      setTimeout(() => {
-        this.errorMessage = null;
-        }, 3000);
+    if (err.error.error === 'Permission denied')
+      this.errorMessage = 'Nie masz uprawnień do wykonania tej operacji';
+    else this.errorMessage = err.message;
+    setTimeout(() => {
+      this.errorMessage = null;
+    }, 3000);
   }
 
   DeleteEmployee(id: string | undefined) {

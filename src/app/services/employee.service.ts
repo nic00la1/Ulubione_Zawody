@@ -20,7 +20,7 @@ export class EmployeeService {
     const headers = new HttpHeaders({ 'my-header': 'hello-world' });
     this.http
       .post(
-        'https://my-employeesxxxx-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json',
+        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json',
         employee,
         { headers: headers } // add headers to the request
       )
@@ -148,5 +148,22 @@ export class EmployeeService {
           this.errorSubject.next(err);
         },
       });
+  }
+
+  getEmployeeInfo(id: string | undefined) {
+    return this.http
+      .get(
+        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees/' +
+          id +
+          '.json'
+      )
+      .pipe(
+        map((res) => {
+          console.log(res);
+          let employee = {};
+          employee = { ...res, id: id };
+          return employee;
+        })
+      );
   }
 }
