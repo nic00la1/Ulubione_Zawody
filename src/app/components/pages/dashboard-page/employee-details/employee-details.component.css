@@ -14,9 +14,6 @@
     border-radius: 5px;
     width: 40%;
     position: relative;
-    overflow: auto; /* Add this line */
-    max-height: 90vh; /* Optional: Adjust this value as needed */
-
   }
   
   .popup h2 {
@@ -47,7 +44,10 @@
       width: 70%;
     }
   }
-
+  hr{
+    border: #28282B 3px solid;
+    margin: 15px 0px;
+  }
   .container {
     position: relative;
     max-width: 700px;
@@ -90,6 +90,7 @@
     border: 2px solid #aaa;
     border-radius: 6px;
     padding: 10px 15px;
+    font-weight: 700;
   }
   
   .form .column {

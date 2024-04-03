@@ -21,7 +21,18 @@
                     <label>Stanowisko</label>
                     <input type="text" required name="profession" ngModel />
                   </div>
-                 
+                  <div class="input-box">
+                    <label>Pensja</label>
+                    <input type="number" required name="salary" ngModel />
+                  </div>
+                  <div class="input-box">
+                    <label>Data zatrudnienia</label>
+                    <input type="date" required name="startDate" ngModel />
+                  </div>
+                  <div class="input-box">
+                    <label>Pełny etat</label>
+                    <input type="checkbox" name="isFullTime" ngModel />
+                  </div>
                   <button type="submit">{{isEditMode ? 'Edytuj Pracownika' : 'Dodaj Pracownika'}}</button>
                 </form>
               </section>
