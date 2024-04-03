@@ -4,6 +4,7 @@ import {
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
+  HttpParams,
 } from '@angular/common/http';
 import { Subject, catchError, map, throwError } from 'rxjs';
 import { LoggingService } from './logging.service';
@@ -94,9 +95,23 @@ export class EmployeeService {
   }
 
   GetAllEmployees() {
+    // purpose of the headers is to tell the server what kind of data we are sending
+    let headers = new HttpHeaders();
+    headers = headers.set('content-type', 'application/json');
+    headers = headers.append('content-type', 'text/html')
+    // the set method returns new instances after modyfing the header
+    // append method appends new value to the existing header
+
+    // pagination and filtering
+    let queryParams = new HttpParams();
+    queryParams = queryParams.set('page', 2)
+    queryParams = queryParams.set('item', 10)
+    
+
     return this.http
       .get<{ [key: string]: Employee }>(
-        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json'
+        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json' 
+        , {headers: headers, params: queryParams}
       )
       .pipe(
         map((res) => {
