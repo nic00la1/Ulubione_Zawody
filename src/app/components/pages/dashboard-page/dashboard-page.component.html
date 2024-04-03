@@ -37,7 +37,9 @@
   <hr />
 
   <div class="dashboard-item-container">
-    @if (isLoading) {
+    @if (errorMessage) {
+    <div class="sb sb-error">{{ errorMessage }}</div>
+    } @if (isLoading) {
     <div class="loader"></div>
     } @if ( !isLoading && allEmployees.length < 1) {
     <div style="color: red">
