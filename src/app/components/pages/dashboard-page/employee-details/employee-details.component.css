@@ -90,6 +90,7 @@
     border: 2px solid #aaa;
     border-radius: 6px;
     padding: 10px 15px;
+    font-weight: 700;
   }
   
   .form .column {
