@@ -1,5 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { MessageComponent } from '../../partials/message/message.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Employee } from '../../../shared/models/Employee';
@@ -8,16 +7,19 @@ import { Subscription, map } from 'rxjs';
 import { OurEmployeesComponent } from './employees/employees';
 import { EmployeeService } from '../../../services/employee.service';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
+import { LoaderComponent } from '../../../utility/loader/loader.component';
+import { SnackbarComponent } from '../../../utility/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-dashboard-page',
   standalone: true,
   imports: [
-    MessageComponent,
     FormsModule,
     CommonModule,
     OurEmployeesComponent,
     EmployeeDetailsComponent,
+    LoaderComponent,
+    SnackbarComponent
   ],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.css',

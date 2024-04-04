@@ -7,6 +7,7 @@ import { Injectable, inject } from '@angular/core';
 export class LoggingService {
   http = inject(HttpClient);
 
+  // Log error to Firebase Realtime Database
   logError(data: { statusCode: number; errorMessage: string; dateTime: Date }) {
     this.http
       .post(
@@ -16,6 +17,7 @@ export class LoggingService {
       .subscribe();
   }
 
+  // Fetch errors from Firebase Realtime Database
   fetchErrors() {
     this.http
       .get(

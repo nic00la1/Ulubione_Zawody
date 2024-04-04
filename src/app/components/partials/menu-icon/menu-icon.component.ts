@@ -12,7 +12,6 @@ import { RouterLink } from '@angular/router';
 export class MenuIconComponent {
   @Output() toggle = new EventEmitter<void>();
 
-
   onIconClick() {
     this.toggle.emit();
   }

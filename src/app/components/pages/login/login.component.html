@@ -1,0 +1,47 @@
+<div class="app-login-form">
+  @if (errorMessage) {
+    <app-snackbar [errorMessage]="errorMessage"/>
+  }
+  <h2>{{ isLoginMode ? "Zaloguj się" : "Zarejestruj się" }}</h2>
+  @if (isLoading) {
+  <app-loader />
+  } @if (!isLoading) {
+  <form #authForm="ngForm" (ngSubmit)="onFormSubmitted(authForm)">
+    <div class="form-input">
+      <label>Email</label>
+      <input
+        type="email"
+        placeholder="Adres Email"
+        required
+        name="email"
+        ngModel
+      />
+    </div>
+    <div class="form-input">
+      <label>Hasło</label>
+      <input
+        type="password"
+        placeholder="Hasło"
+        name="password"
+        ngModel
+        required
+        minlength="8"
+      />
+    </div>
+    <button
+      type="submit"
+      class="app-login-btn"
+      [disabled]="authForm.invalid"
+      [ngClass]="{ 'invalid-button': authForm.invalid }"
+    >
+      {{ isLoginMode ? "Zaloguj" : "Zarejestruj" }}
+    </button>
+    <p>
+      {{ isLoginMode ? "Nie masz jeszcze konta?" : "Masz już konto?" }}
+      <button class="app-toggle-btn" type="button" (click)="onSwitchMode()">
+        {{ isLoginMode ? "Zarejestruj się" : "Zaloguj się" }}
+      </button>
+    </p>
+  </form>
+  }
+</div>

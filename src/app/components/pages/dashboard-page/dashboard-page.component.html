@@ -6,8 +6,11 @@
   [selectedEmployee]="selectedEmployee"
 ></our-employees>
 } @if (showEmployeeDetails) {
-<employee-details (CloseInfoView)="CloseEmployeeInfo()"
-[currentEmployee]="currentEmployee"> </employee-details>
+<employee-details
+  (CloseInfoView)="CloseEmployeeInfo()"
+  [currentEmployee]="currentEmployee"
+>
+</employee-details>
 }
 
 <div class="dashboard-container">
@@ -41,9 +44,9 @@
 
   <div class="dashboard-item-container">
     @if (errorMessage) {
-    <div class="sb sb-error">{{ errorMessage }}</div>
+    <app-snackbar [errorMessage]="errorMessage" />
     } @if (isLoading) {
-    <div class="loader"></div>
+    <app-loader />
     } @if ( !isLoading && allEmployees.length < 1) {
     <div style="color: red">
       <strong>Brak pracowników!</strong>
