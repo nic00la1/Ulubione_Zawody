@@ -3,6 +3,7 @@ export class Employee {
         public name: string,
         public surname: string,
         public email: string,
+        public password: string,
         public profession: string,
         public salary: number,
         public startDate: string,

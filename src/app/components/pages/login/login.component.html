@@ -1,17 +1,35 @@
 <div class="app-login-form">
-    <h2>Login Here</h2>
-    <form>
-        <div class="form-input">
-            <label>Email Address</label>
-            <input type="email" placeholder="Email address">
-        </div>
-        <div class="form-input">
-            <label>Password</label>
-            <input type="password" placeholder="Password">
-        </div>           
-        <button type="submit" class="app-login-btn">Login</button>
-        <p>Do not have an accout yet? 
-            <button class="app-toggle-btn">Register Here.</button>
-        </p>
-    </form>
+  <h2>{{ isLoginMode ? "Zaloguj się" : "Zarejestruj się" }}</h2>
+  <form #authForm="ngForm" (ngSubmit)="onFormSubmitted(authForm)">
+    <div class="form-input">
+      <label>Email</label>
+      <input
+        type="email"
+        placeholder="Adres Email"
+        required
+        name="email"
+        ngModel
+      />
+    </div>
+    <div class="form-input">
+      <label>Hasło</label>
+      <input
+        type="password"
+        placeholder="Hasło"
+        name="password"
+        ngModel
+        required
+        minlength="8"
+      />
+    </div>
+    <button type="submit" class="app-login-btn" [disabled]="authForm.invalid" [ngClass]="{ 'invalid-button': authForm.invalid }">
+      {{ isLoginMode ? "Zaloguj" : "Zarejestruj" }}
+    </button>
+    <p>
+      {{ isLoginMode ? "Nie masz jeszcze konta?" : "Masz już konto?" }}
+      <button class="app-toggle-btn" type="button" (click)="onSwitchMode()">
+        {{ isLoginMode ? "Zarejestruj się" : "Zaloguj się" }}
+      </button>
+    </p>
+  </form>
 </div>

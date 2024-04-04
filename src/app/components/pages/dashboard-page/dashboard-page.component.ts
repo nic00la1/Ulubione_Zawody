@@ -60,6 +60,7 @@ export class DashboardPageComponent implements OnInit {
       name: '',
       surname: '',
       email: '',
+      password: '',
       profession: '',
       salary: 0,
       startDate: '',
