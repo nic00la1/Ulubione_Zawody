@@ -1,5 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { MessageComponent } from '../../partials/message/message.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Employee } from '../../../shared/models/Employee';
@@ -13,7 +12,6 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
   selector: 'app-dashboard-page',
   standalone: true,
   imports: [
-    MessageComponent,
     FormsModule,
     CommonModule,
     OurEmployeesComponent,
@@ -60,7 +58,6 @@ export class DashboardPageComponent implements OnInit {
       name: '',
       surname: '',
       email: '',
-      password: '',
       profession: '',
       salary: 0,
       startDate: '',
