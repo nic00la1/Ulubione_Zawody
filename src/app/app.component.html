@@ -1,7 +1,9 @@
-<div id="container" [ngClass]="{sidebarActive: sidebarActive}">
-    <sidebar/>
-    <div id="contentContainer">
-        <app-header (toggle)="onToggle()"/>
-        <router-outlet id="content"/>  
+<div id="container" [ngClass]="{ sidebarActive: sidebarActive }">
+  <sidebar />
+  <div id="contentContainer">
+    <div id="content">
+      <app-header (toggle)="onToggle()" />
+      <router-outlet></router-outlet>
     </div>
+  </div>
 </div>

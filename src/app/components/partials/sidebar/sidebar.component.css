@@ -19,6 +19,7 @@
             border-bottom: 2px solid transparent;
             transition: 0.3s ease-out;
 
+            
 
             &:hover {
                 color: #007bff;
