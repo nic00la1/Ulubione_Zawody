@@ -1,4 +1,6 @@
 <div id="logo">
+  @if (isLoggedIn) {
+
   <svg
     (click)="onIconClick()"
     class="hb"
@@ -47,5 +49,13 @@
       />
     </rect>
   </svg>
-  <span routerLink="/home" (click)="onIconClick()">Firma Nicoli</span>  
+}
+  @if (isLoggedIn) {
+    <span routerLink="" (click)="onIconClick()">Firma Nicoli</span>  
+  }
+  @else {
+    <span routerLink="" [ngStyle]="
+      isLoggedIn ? { display: 'none' } : { marginLeft: '3rem'}
+    ">Firma Nicoli</span>  
+  }
 </div>

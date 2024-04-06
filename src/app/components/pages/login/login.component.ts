@@ -6,6 +6,7 @@ import { LoaderComponent } from '../../../utility/loader/loader.component';
 import { SnackbarComponent } from '../../../utility/snackbar/snackbar.component';
 import { Observable } from 'rxjs';
 import { AuthResponse } from '../../../shared/models/AuthResponse';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ import { AuthResponse } from '../../../shared/models/AuthResponse';
 })
 export class LoginComponent {
   authService = inject(AuthService);
+  router = inject(Router)
   isLoginMode: boolean = true;
   isLoading: boolean = false;
   errorMessage: string | null = null;
@@ -43,6 +45,7 @@ export class LoginComponent {
       next: (res) => {
         console.log(res);
         this.isLoading = false;
+        this.router.navigate(['/dashboard']);
       },
       error: (errMsg) => {
         this.isLoading = false;

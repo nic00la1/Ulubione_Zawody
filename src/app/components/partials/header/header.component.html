@@ -1,6 +1,10 @@
 <div id="header">
-  <menu-icon (toggle)="onToggle()"/>
-  <div id="menu">
-    <a routerLink="/login">Zaloguj się</a>
+    <menu-icon (toggle)="onToggle()" />
+    <div id="menu" [ngStyle]="{'margin-left': isLoggedIn ? '' : 'auto'}">
+    @if (!isLoggedIn) {
+    <a routerLink="/login" class="btn btn-light shadow">Zaloguj się</a>
+    } @if (isLoggedIn) {
+    <a class="btn btn-danger text-white">Logout</a>
+    }
   </div>
 </div>
