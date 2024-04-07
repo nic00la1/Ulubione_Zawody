@@ -7,8 +7,17 @@ import {
   HttpHeaders,
   HttpParams,
 } from '@angular/common/http';
-import { Subject, catchError, map, tap, throwError } from 'rxjs';
+import {
+  Subject,
+  catchError,
+  exhaustMap,
+  map,
+  take,
+  tap,
+  throwError,
+} from 'rxjs';
 import { LoggingService } from './logging.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +26,7 @@ export class EmployeeService {
   http = inject(HttpClient);
   loggingService = inject(LoggingService);
   errorSubject = new Subject<HttpErrorResponse>();
+  authService = inject(AuthService);
 
   CreateEmployee(employee: Employee) {
     const headers = new HttpHeaders({ 'my-header': 'hello-world' });
@@ -75,13 +85,12 @@ export class EmployeeService {
     this.http
       .delete(
         'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json',
-        { observe: 'events', responseType: 'json'}
+        { observe: 'events', responseType: 'json' }
       )
       .pipe(
         tap((event) => {
           console.log(event);
-          if(event.type === HttpEventType.Sent) {
-
+          if (event.type === HttpEventType.Sent) {
           }
         }),
         catchError((err) => {
@@ -103,46 +112,38 @@ export class EmployeeService {
   }
 
   GetAllEmployees() {
-    // purpose of the headers is to tell the server what kind of data we are sending
-    let headers = new HttpHeaders();
-    headers = headers.set('content-type', 'application/json');
-    headers = headers.append('content-type', 'text/html');
-    // the set method returns new instances after modyfing the header
-    // append method appends new value to the existing header
-
-    // pagination and filtering
-    let queryParams = new HttpParams();
-    queryParams = queryParams.set('page', 2);
-    queryParams = queryParams.set('item', 10);
-
-    return this.http
-      .get<{ [key: string]: Employee }>(
-        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json',
-        { headers: headers, params: queryParams, observe: 'body' }
-      )
-      .pipe(
-        map((res) => {
-          // convert the response to an array of employees
-          let employees = [];
-          console.log(res);
-          for (let key in res) {
-            if (res.hasOwnProperty(key)) {
-              employees.push({ ...res[key], id: key });
-            }
+    return this.authService.user.pipe(
+      take(1),
+      exhaustMap((user) => {
+        return this.http.get<{ [key: string]: Employee }>(
+          'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json',
+          {
+            params: new HttpParams().set('auth', user.token),
           }
-          return employees;
-        }),
-        catchError((err) => {
-          // Write the logic to log errors
-          const errorObj = {
-            statusCode: err.status,
-            errorMessage: err.message,
-            dateTime: new Date(),
-          };
-          this.loggingService.logError(errorObj);
-          return throwError(() => err);
-        })
-      );
+        );
+      }),
+      map((res) => {
+        // convert the response to an array of employees
+        let employees = [];
+        console.log(res);
+        for (let key in res) {
+          if (res.hasOwnProperty(key)) {
+            employees.push({ ...res[key], id: key });
+          }
+        }
+        return employees;
+      }),
+      catchError((err) => {
+        // Write the logic to log errors
+        const errorObj = {
+          statusCode: err.status,
+          errorMessage: err.message,
+          dateTime: new Date(),
+        };
+        this.loggingService.logError(errorObj);
+        return throwError(() => err);
+      })
+    );
   }
 
   UpdateEmployee(id: string | undefined, data: Employee) {

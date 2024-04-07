@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { AuthResponse } from '../shared/models/AuthResponse';
-import { Subject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, catchError, tap, throwError } from 'rxjs';
 import { User } from '../shared/models/User';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { User } from '../shared/models/User';
 })
 export class AuthService {
   http = inject(HttpClient);
-  user = new Subject<User>();
+  user = new BehaviorSubject<User>(null);
 
   signUp(email: any, password: any) {
     const data = { email: email, password: password, returnSecureToken: true };
