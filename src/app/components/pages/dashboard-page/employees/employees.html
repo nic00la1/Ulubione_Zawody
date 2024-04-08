@@ -1,7 +1,7 @@
 <div class="overlay">
 	<div class="popup">
 		<h2>{{isEditMode ? 'Edytuj Pracownika' : 'Utwórz nowego pracownika'}}</h2>
-		<a class="close" href="#" (click)="OnCloseForm()">&times;</a>
+		<a class="close" href="#" (click)="OnCloseForm($event)">&times;</a>
 		<div class="content">
 			<section class="container">
                 <form action="#" class="form" #employeeForm="ngForm" (ngSubmit)="OnFormSubmitted(employeeForm)">

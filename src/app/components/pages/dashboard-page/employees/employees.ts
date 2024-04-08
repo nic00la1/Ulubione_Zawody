@@ -41,8 +41,9 @@ export class OurEmployeesComponent {
     }, 0);
   }
 
-  OnCloseForm(){
-    this.CloseForm.emit(false);
+  OnCloseForm(event: Event) {
+    event.preventDefault(); // Preventing from bug with rendering to 'home'
+    this.CloseForm.emit(false); 
   }
 
   OnFormSubmitted(form: NgForm) {

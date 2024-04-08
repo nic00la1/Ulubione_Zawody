@@ -2,7 +2,7 @@
   <div class="popup">
     <h2>{{ currentEmployee?.name }} {{ currentEmployee?.surname }}</h2>
     <hr />
-    <a class="close" href="#" (click)="onCloseInfoView()">&times;</a>
+    <a class="close" href="#" (click)="onCloseInfoView($event)">&times;</a>
     <div class="content">
       <section class="container">
         <h3>{{ currentEmployee?.email }}</h3>

@@ -4,7 +4,7 @@
     @if (!isLoggedIn) {
     <a routerLink="/login" class="btn btn-light shadow">Zaloguj się</a>
     } @if (isLoggedIn) {
-    <a class="btn btn-danger text-white">Logout</a>
+    <a class="btn btn-danger text-white" (click)="onLogout()">Logout</a>
     }
   </div>
 </div>
