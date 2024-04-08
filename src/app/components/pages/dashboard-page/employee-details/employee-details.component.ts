@@ -16,7 +16,7 @@ export class EmployeeDetailsComponent {
   @Input() currentEmployee: Employee | null = null;
 
   onCloseInfoView(event: Event) {
-    event.preventDefault();
+    event.preventDefault(); // Preventing from bug with rendering to 'home'
     this.CloseInfoView.emit(false);
   }
 }
