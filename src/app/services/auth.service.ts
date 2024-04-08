@@ -41,11 +41,25 @@ export class AuthService {
    this.router.navigate(['/login']);
   }
 
+  autoLogin() {
+    const user = JSON.parse(localStorage.getItem('userData'));
+
+    if (!user) return;
+     
+    const loggedUser = new User(user.email, user.id, user._token, user._tokenExpirationDate);
+
+    if(loggedUser.token) {
+      this.user.next(loggedUser);
+    }
+  }
+
   private handleCreateUser(res : any) {
     const expiresInTs = new Date().getTime() + +res.expiresIn * 1000 // Timestamp for current date and time
     const expiresIn = new Date(expiresInTs);
     const user = new User(res.email, res.localId, res.idToken, expiresIn);
     this.user.next(user);
+
+    localStorage.setItem('userData', JSON.stringify(user));
   }
   private handleErrors(err: any) {
     let errorMessage = 'Wystąpił nieznany błąd, spróbuj ponownie później';
