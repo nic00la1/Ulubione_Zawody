@@ -112,38 +112,33 @@ export class EmployeeService {
   }
 
   GetAllEmployees() {
-    return this.authService.user.pipe(
-      take(1),
-      exhaustMap((user) => {
-        return this.http.get<{ [key: string]: Employee }>(
-          'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json',
-          {
-            params: new HttpParams().set('auth', user.token),
+    return this.http
+      .get(
+        'https://my-employees-24871-default-rtdb.europe-west1.firebasedatabase.app/employees.json'
+      )
+      .pipe(
+        map((res) => {
+          // convert the response to an array of employees
+          let employees = [];
+          console.log(res);
+          for (let key in res) {
+            if (res.hasOwnProperty(key)) {
+              employees.push({ ...res[key], id: key });
+            }
           }
-        );
-      }),
-      map((res) => {
-        // convert the response to an array of employees
-        let employees = [];
-        console.log(res);
-        for (let key in res) {
-          if (res.hasOwnProperty(key)) {
-            employees.push({ ...res[key], id: key });
-          }
-        }
-        return employees;
-      }),
-      catchError((err) => {
-        // Write the logic to log errors
-        const errorObj = {
-          statusCode: err.status,
-          errorMessage: err.message,
-          dateTime: new Date(),
-        };
-        this.loggingService.logError(errorObj);
-        return throwError(() => err);
-      })
-    );
+          return employees;
+        }),
+        catchError((err) => {
+          // Write the logic to log errors
+          const errorObj = {
+            statusCode: err.status,
+            errorMessage: err.message,
+            dateTime: new Date(),
+          };
+          this.loggingService.logError(errorObj);
+          return throwError(() => err);
+        })
+      );
   }
 
   UpdateEmployee(id: string | undefined, data: Employee) {
