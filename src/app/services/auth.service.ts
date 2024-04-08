@@ -13,7 +13,7 @@ export class AuthService {
   user = new BehaviorSubject<User>(null);
   router = inject(Router);
 
-  signUp(email: any, password: any) {
+  signUp(email, password) {
     const data = { email: email, password: password, returnSecureToken: true };
     return this.http
       .post<AuthResponse>(
@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   
-  login(email: any, password: any) {
+  login(email, password) {
     const data = { email: email, password: password, returnSecureToken: true };
     return this.http.post<AuthResponse>(
       'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBo4ZTI74hxnNFqv8D6Cmag6BLrI-Jb5Xc',

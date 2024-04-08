@@ -41,7 +41,8 @@ export class OurEmployeesComponent {
     }, 0);
   }
 
-  OnCloseForm(){
+  OnCloseForm(event: Event) {
+    event.preventDefault();
     this.CloseForm.emit(false);
   }
 

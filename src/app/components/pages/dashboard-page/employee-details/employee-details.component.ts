@@ -15,7 +15,8 @@ export class EmployeeDetailsComponent {
 
   @Input() currentEmployee: Employee | null = null;
 
-  onCloseInfoView() {
+  onCloseInfoView(event: Event) {
+    event.preventDefault();
     this.CloseInfoView.emit(false);
   }
 }
