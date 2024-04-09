@@ -8,7 +8,6 @@
   } @if (!isLoading) {
   <form #authForm="ngForm" (ngSubmit)="onFormSubmitted(authForm)">
     <div class="form-input">
-      <label>Email</label>
       <input
         type="email"
         placeholder="Adres Email"
@@ -16,9 +15,9 @@
         name="email"
         ngModel
       />
+      <i class="bx bxs-user"></i>
     </div>
     <div class="form-input">
-      <label>Hasło</label>
       <input
         type="password"
         placeholder="Hasło"
@@ -27,6 +26,7 @@
         required
         minlength="8"
       />
+      <i class="bx bxs-lock-alt"></i>
     </div>
     <button
       type="submit"
