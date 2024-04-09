@@ -3,6 +3,8 @@
     height: 100%;
     border-right: 1px solid #e9ecef;
     background-color: #f8f9fa;
+    background: linear-gradient(#fa709a, #784ba8, #2b86c5); /* Dodajemy kolor tła */
+
 
     #menu {
         display: flex;
@@ -11,7 +13,7 @@
         padding-top: 1rem;
 
         a {
-            color: #495057;
+            color: whitesmoke; /* Zmieniamy kolor czcionki */
             text-decoration: none;
             font-size: 1.2rem;
             font-weight: 500;
