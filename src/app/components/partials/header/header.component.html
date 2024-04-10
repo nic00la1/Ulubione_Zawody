@@ -3,7 +3,8 @@
     <div id="menu" [ngStyle]="{'margin-left': isLoggedIn ? '' : 'auto'}">
     @if (!isLoggedIn) {
     <a routerLink="/login" class="btn btn-light shadow">Zaloguj się</a>
-    } @if (isLoggedIn) {
+    } @if (isLoggedIn || user) {
+      <p class="fw-bold">Witaj, {{user.name}}!</p>
     <a class="btn btn-danger text-white" (click)="onLogout()">Wyloguj się</a>
     }
   </div>

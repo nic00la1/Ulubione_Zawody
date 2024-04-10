@@ -12,4 +12,8 @@ export class User {
 
     return this._token;
   }
+
+  get name() {
+    return this.email.substring(0, this.email.indexOf("@"));
+  }
 }

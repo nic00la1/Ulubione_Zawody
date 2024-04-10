@@ -18,12 +18,14 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   authService = inject(AuthService);
   isLoggedIn: boolean = false;
+  user: User | null = null;
   private userSubject ?: Subscription
 
   ngOnInit() {
     this.userSubject = this.authService.user.subscribe((user: User) => {
       console.log(user);
       this.isLoggedIn = user ? true : false;
+      this.user = user;
     });
   }
 
