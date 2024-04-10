@@ -1,4 +1,7 @@
 # Zadanie dla chetnych
+## Wersja 2.0.2
+* Upgraded UI ✨
+![Ulubione_zawody_project2](https://github.com/nic00la1/Ulubione_Zawody/assets/99048749/ad710f6b-03f7-44c2-8dbb-b3eb6631532b)
 
 ## Wersja 2.0.1 
 * **User Authentication**: Implemented user authentication using Firebase. Users are now required to log in to access certain parts of the application. This feature is managed by the AuthService and the AuthGuard.
