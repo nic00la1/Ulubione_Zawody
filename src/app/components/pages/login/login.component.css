@@ -1,12 +1,24 @@
+.container-elo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url(/assets/mountains.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
 .app-login-form{
-    width: 520px;
+    width: 420px;
     height: 360px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 30px 30px;
     border-radius: 10px;
     margin: 75px auto;
     padding: 30px 40px;
-    background-color: purple;
+    background-color: transparent;
     color: white;
 }
 
@@ -77,6 +89,7 @@
     cursor: pointer;
     color: white;
     font-weight: 700;
+    margin: 20px 0 15px;
 }
 
 .app-toggle-btn:hover {
